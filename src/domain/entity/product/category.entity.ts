@@ -1,6 +1,6 @@
-export enum Category {
+export enum CategoryEnum {
     BURGUER = 'Lanche',
-    ACCOMPANIMENT = 'Acompanhamento',
+    SIDE_DISH = 'Acompanhamento',
     DESSERT = 'Sobremesa',
     DRINK = 'Bebida'
 }
