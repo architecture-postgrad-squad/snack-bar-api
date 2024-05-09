@@ -9,8 +9,10 @@ import { ProductController } from "src/transport/controller/product.controller";
     imports: [Logger],
     controllers: [ProductController],
     providers: [
-        ProductService, 
-       
+        {
+            provide: ProductServicePort,
+            useClass: ProductService,
+        },
         {
             provide: ProductRepository,
             useClass: ProductInMemoryAdapter,
