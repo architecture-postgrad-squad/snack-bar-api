@@ -9,9 +9,9 @@ datasource db {
 
 model Client {
     id     String  @id @default(uuid())
-    name   String  @db.VarChar(255)
-    email  String  @unique @db.VarChar(255)
-    cpf    String  @unique @db.VarChar(12)
+    name   String? @db.VarChar(255)
+    email  String? @unique @db.VarChar(255)
+    cpf    String? @unique @db.VarChar(12)
     orders Order[]
 }
 
@@ -20,6 +20,8 @@ model Product {
     name         String         @db.VarChar(255)
     category     String         @db.VarChar(255)
     price        Float          @db.DoublePrecision()
+    available    Boolean        @default(false) @db.Boolean()
+    active       Boolean        @default(false) @db.Boolean()
     description  String?        @db.Text()
     images       Json?          @db.JsonB
     orderProduct OrderProduct[]
@@ -28,12 +30,12 @@ model Product {
 model Order {
     id           String         @id @default(uuid())
     clientId     String         @db.VarChar(255)
-    paymentId    String         @unique @db.VarChar(255)
+    paymentId    String?        @unique @db.VarChar(255)
     commands     String         @db.VarChar(255)
     status       String         @db.VarChar(255)
     createdAt    DateTime       @default(now())
     client       Client         @relation(fields: [clientId], references: [id])
-    payment      Payment        @relation(fields: [paymentId], references: [id])
+    payment      Payment?       @relation(fields: [paymentId], references: [id])
     orderProduct OrderProduct[]
 }
 
