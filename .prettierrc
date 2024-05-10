@@ -6,5 +6,5 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
-  "printWidth": 120
+  "printWidth": 90
 }
