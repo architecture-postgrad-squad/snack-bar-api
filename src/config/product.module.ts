@@ -1,22 +1,22 @@
-import { Module } from "@nestjs/common";
-import { ProductInMemoryAdapter } from "src/datasource/adapter/product-in-memory.adapter";
-import { ProductServicePort } from "src/domain/interactor/port/product-service.port";
-import { ProductService } from "src/domain/interactor/product.service";
-import { ProductRepository } from "src/domain/repository/product/product.repository";
-import { ProductController } from "src/transport/controller/product.controller";
+import { ProductInMemoryAdapter } from '@/datasource/adapter/product-in-memory.adapter';
+import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
+import { FindAllService } from '@/domain/interactor/services/find-all.service';
+import { ProductRepository } from '@/domain/repository/product.repository';
+import { ProductController } from '@/transport/controller/product.controller';
+import { Module } from '@nestjs/common';
 
 @Module({
-    imports: [],
-    controllers: [ProductController],
-    providers: [
-        {
-            provide: ProductServicePort,
-            useClass: ProductService,
-        },
-        {
-            provide: ProductRepository,
-            useClass: ProductInMemoryAdapter,
-        },
-    ],
-  })
-  export class ProductModule {}
+  imports: [],
+  controllers: [ProductController],
+  providers: [
+    {
+      provide: ProductServicePort,
+      useClass: FindAllService,
+    },
+    {
+      provide: ProductRepository,
+      useClass: ProductInMemoryAdapter,
+    },
+  ],
+})
+export class ProductModule {}

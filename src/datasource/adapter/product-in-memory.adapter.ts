@@ -1,11 +1,20 @@
-import { Injectable } from "@nestjs/common";
-import { Product } from "src/domain/entity/product/product.entity";
-import { ProductRepository } from "src/domain/repository/product/product.repository";
+import { ProductRepository } from '@/domain/repository/product.repository';
+import { Injectable } from '@nestjs/common';
+import { Prisma, PrismaClient, Product } from '@prisma/client';
 
 @Injectable()
 export class ProductInMemoryAdapter implements ProductRepository {
-    findAll(): Product[] {
-        return []
-    }
+  prisma = new PrismaClient();
 
+  async findAll(): Promise<Product[]> {
+    return await this.prisma.product.findMany();
+  }
+
+  async create(product: Prisma.ProductCreateInput): Promise<Product> {
+    return await this.prisma.product.create({
+      data: {
+        ...product,
+      },
+    });
+  }
 }

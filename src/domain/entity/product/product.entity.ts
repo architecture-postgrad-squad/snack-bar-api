@@ -1,10 +1,10 @@
-import { CategoryEnum } from "./category.entity"
+import { CategoryEnum } from '@/domain/enum/product/category.enum';
 
 export class Product {
-    readonly id: number
-    readonly name: string
-    readonly category: CategoryEnum
-    readonly price: number
-    readonly description?: string
-    readonly images?: string[]
+  readonly id?: string;
+  readonly name: string;
+  readonly category: CategoryEnum;
+  readonly price: number;
+  readonly description?: string;
+  readonly images?: string[];
 }
