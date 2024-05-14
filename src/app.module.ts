@@ -4,4 +4,4 @@ import { ProductModule } from './config/product.module';
 @Module({
   imports: [ProductModule],
 })
-export class AppModule {}
+export class AppModule { }
