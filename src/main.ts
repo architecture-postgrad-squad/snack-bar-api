@@ -11,7 +11,9 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Snack Bar API')
-    .setDescription('API for managing a small snack bar delivery requests and product catalog.')
+    .setDescription(
+      'API for managing a small snack bar delivery requests and product catalog.',
+    )
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
