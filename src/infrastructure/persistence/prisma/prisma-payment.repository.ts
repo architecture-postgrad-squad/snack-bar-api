@@ -1,19 +1,18 @@
+import { Payment } from '@/domain/entity/payment/payment.entity';
+import { PaymentRepository } from '@/domain/repository/payment/payment.repository';
+import { CreatePaymentDto } from '@/transport/dto/payment.dto';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
-import { PaymentRepository } from 'src/domain/repository/payment/payment.repository';
-import { Payment } from 'src/domain/entity/payment/payment.entity';
 
 @Injectable()
 export class PrismaPaymentRepository implements PaymentRepository {
-    constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-    async create(payment: Payment): Promise<Payment> {
-        const createdPayment = await this.prisma.payment.create({
-            data: {
-                value: payment.value,
-                method: payment.method,
-            },
-        });
-        return createdPayment;
-    }
+  async create(payment: CreatePaymentDto): Promise<Payment> {
+    return await this.prisma.payment.create({
+      data: {
+        ...payment,
+      },
+    });
+  }
 }

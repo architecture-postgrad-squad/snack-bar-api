@@ -1,7 +1,7 @@
-import { Product } from "src/domain/entity/product/product.entity";
+import { Product } from '@/domain/entity/product/product.entity';
 
 export interface ProductServicePort {
-    findAll(): Promise<Product[]> 
+  findAll(): Promise<Product[]>;
 }
 
-export const ProductServicePort = Symbol('ProductServicePort')
+export const ProductServicePort = Symbol('ProductServicePort');
