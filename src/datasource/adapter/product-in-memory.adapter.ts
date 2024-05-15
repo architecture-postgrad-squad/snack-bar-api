@@ -6,14 +6,22 @@ import { Prisma, PrismaClient, Product } from '@prisma/client';
 export class ProductInMemoryAdapter implements ProductRepository {
   prisma = new PrismaClient();
 
-  async findAll(): Promise<Product[]> {
-    return await this.prisma.product.findMany();
-  }
-
   async create(product: Prisma.ProductCreateInput): Promise<Product> {
     return await this.prisma.product.create({
       data: {
         ...product,
+      },
+    });
+  }
+
+  async findAll(): Promise<Product[]> {
+    return await this.prisma.product.findMany();
+  }
+
+  async findAById(id: string): Promise<Product> {
+    return await this.prisma.product.findUniqueOrThrow({
+      where: {
+        id,
       },
     });
   }

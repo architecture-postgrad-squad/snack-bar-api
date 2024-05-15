@@ -1,6 +1,8 @@
 import { ProductInMemoryAdapter } from '@/datasource/adapter/product-in-memory.adapter';
 import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
-import { FindAllService } from '@/domain/interactor/services/find-all.service';
+import { CreateService } from '@/domain/interactor/services/create/create.service';
+import { FindAllService } from '@/domain/interactor/services/find-all/find-all.service';
+import { FindByIdService } from '@/domain/interactor/services/find-by-id/find-by-id.service';
 import { ProductRepository } from '@/domain/repository/product.repository';
 import { ProductController } from '@/transport/controller/product.controller';
 import { Module } from '@nestjs/common';
@@ -11,7 +13,15 @@ import { Module } from '@nestjs/common';
   providers: [
     {
       provide: ProductServicePort,
+      useClass: CreateService,
+    },
+    {
+      provide: ProductServicePort,
       useClass: FindAllService,
+    },
+    {
+      provide: ProductServicePort,
+      useClass: FindByIdService,
     },
     {
       provide: ProductRepository,

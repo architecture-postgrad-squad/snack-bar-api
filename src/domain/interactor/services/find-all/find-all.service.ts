@@ -1,5 +1,6 @@
 import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
 import { ProductRepository } from '@/domain/repository/product.repository';
+import { FindAllProductsResponseDto } from '@/transport/dto/product/find-all/response/find-all-response.dto';
 import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Product } from '@prisma/client';
 
@@ -10,16 +11,23 @@ export class FindAllService implements ProductServicePort {
     private readonly productRepository: ProductRepository,
   ) {}
 
-  //TODO:  update return type
-  async findAll(): Promise<any[]> {
-    return this.find();
+  async findAll(): Promise<FindAllProductsResponseDto> {
+    const productList = await this.find();
+    return this.formatResponse(productList);
   }
 
   private async find(): Promise<Product[]> {
     try {
       return await this.productRepository.findAll();
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException();
     }
+  }
+
+  private formatResponse(productList: Product[]): FindAllProductsResponseDto {
+    return {
+      products: productList,
+    };
   }
 }
