@@ -1,4 +1,9 @@
 export const PRODUCT = {
+  API_PROPERTY: {
+    CREATE: 'Creates a product register',
+    GET_ALL: 'Fetches all registered products in database',
+    GET_BY_ID: 'Fetches product by identifier in database',
+  },
   ID: {
     DESC: 'Product identifier in database',
     EXAMPLE: '5671843b-324b-40ae-aaa8-a3b404013703',
