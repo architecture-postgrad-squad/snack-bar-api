@@ -21,6 +21,7 @@ export class CreateService implements ProductServicePort {
     try {
       return await this.productRepository.create(product);
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException();
     }
   }
