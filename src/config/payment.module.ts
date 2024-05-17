@@ -4,7 +4,7 @@ import { PaymentRepository } from '@/domain/repository/payment/payment.repositor
 import { PrismaPaymentRepository } from '@/infrastructure/persistence/prisma/prisma-payment.repository';
 import { PaymentController } from '@/transport/controller/payment/payment.controller';
 import { Module } from '@nestjs/common';
-import { PrismaService } from 'prisma/prisma.service';
+import { PrismaService } from '@/config/prisma.config';
 
 @Module({
   imports: [],
