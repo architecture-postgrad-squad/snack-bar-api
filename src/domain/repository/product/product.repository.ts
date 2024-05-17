@@ -1,6 +1,6 @@
-import { Product } from "src/domain/entity/product/product.entity";
+import { Product } from '@/domain/entity/product/product.entity';
 
 export interface ProductRepository {
-    findAll(): Product[]
+  findAll(): Product[];
 }
-export const ProductRepository = Symbol('ProductRepository')
+export const ProductRepository = Symbol('ProductRepository');
