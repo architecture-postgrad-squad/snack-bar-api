@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ClientReaderService } from './client-reader.service'; // ajuste o caminho conforme necessário
+import { ClientReaderService } from './client-reader.service';
 import { ClientRepository } from '@/domain/repository/client/client.repository';
 import { Client } from '@/domain/entity/client/client.entity';
 
