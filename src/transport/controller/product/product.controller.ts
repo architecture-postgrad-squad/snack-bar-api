@@ -1,4 +1,4 @@
-import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
+import { ProductServicePort } from '@/domain/interactor/port/product/product-service.port';
 import { Controller, Get, Inject } from '@nestjs/common';
 
 @Controller('product')

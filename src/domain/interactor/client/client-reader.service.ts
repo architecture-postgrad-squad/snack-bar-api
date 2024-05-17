@@ -1,7 +1,7 @@
 import { Inject } from "@nestjs/common";
 import { Client } from "@/domain/entity/client/client.entity";
 import { ClientRepository } from "@/domain/repository/client/client.repository";
-import { ClientReaderServicePort } from "@/domain/interactor/port/client-reader-service.port";
+import { ClientReaderServicePort } from "@/domain/interactor/port/client/client-reader-service.port";
 
 export class ClientReaderService implements ClientReaderServicePort {
     constructor(

@@ -1,5 +1,5 @@
 import { Product } from '@/domain/entity/product/product.entity';
-import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
+import { ProductServicePort } from '@/domain/interactor/port/product/product-service.port';
 import { ProductRepository } from '@/domain/repository/product/product.repository';
 import { Inject, Injectable } from '@nestjs/common';
 

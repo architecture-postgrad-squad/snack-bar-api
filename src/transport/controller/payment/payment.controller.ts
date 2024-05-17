@@ -1,5 +1,5 @@
 import { Payment } from '@/domain/entity/payment/payment.entity';
-import { PaymentServicePort } from '@/domain/interactor/port/payment-service.port';
+import { PaymentServicePort } from '@/domain/interactor/port/payment/payment-service.port';
 import { CreatePaymentDto } from '@/transport/dto/payment.dto';
 import { Body, Controller, HttpStatus, Inject, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';

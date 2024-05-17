@@ -1,5 +1,5 @@
 import { PaymentService } from '@/domain/interactor/payment/payment.service';
-import { PaymentServicePort } from '@/domain/interactor/port/payment-service.port';
+import { PaymentServicePort } from '@/domain/interactor/port/payment/payment-service.port';
 import { PaymentRepository } from '@/domain/repository/payment/payment.repository';
 import { PrismaPaymentRepository } from '@/infrastructure/persistence/prisma/prisma-payment.repository';
 import { PaymentController } from '@/transport/controller/payment/payment.controller';

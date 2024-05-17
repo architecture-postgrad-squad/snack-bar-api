@@ -1,5 +1,5 @@
 import { Payment } from '@/domain/entity/payment/payment.entity';
-import { PaymentServicePort } from '@/domain/interactor/port/payment-service.port';
+import { PaymentServicePort } from '@/domain/interactor/port/payment/payment-service.port';
 import { PaymentRepository } from '@/domain/repository/payment/payment.repository';
 import { CreatePaymentDto } from '@/transport/dto/payment.dto';
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';

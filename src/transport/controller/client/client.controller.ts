@@ -1,9 +1,9 @@
-import { ClientWriterServicePort } from "@/domain/interactor/port/client-writer-service.port";
+import { ClientWriterServicePort } from "@/domain/interactor/port/client/client-writer-service.port";
 import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Patch, Post } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Client } from "@/domain/entity/client/client.entity";
 import { SaveClientDTO } from "@/transport/dto/save-client.dto";
-import { ClientReaderServicePort } from "@/domain/interactor/port/client-reader-service.port";
+import { ClientReaderServicePort } from "@/domain/interactor/port/client/client-reader-service.port";
 
 @Controller('clients')
 @ApiTags('clients')
