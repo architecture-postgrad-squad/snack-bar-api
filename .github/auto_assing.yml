@@ -1,0 +1,11 @@
+---
+addAssignees: 'author'
+
+addReviewers: true
+reviewers:
+  - eduardopetri
+  - deboracosilveira
+  - fmo00
+  - mirielesilverio
+
+number_of_reviewers: 0
