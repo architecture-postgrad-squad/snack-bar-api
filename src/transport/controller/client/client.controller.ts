@@ -9,9 +9,7 @@ import { ClientReaderServicePort } from "@/domain/interactor/port/client/client-
 @ApiTags('clients')
 export class ClientController {
     constructor(
-        @Inject(ClientWriterServicePort)
         private readonly clientWriterService: ClientWriterServicePort,
-        @Inject(ClientReaderServicePort)
         private readonly clientReaderService: ClientReaderServicePort
     ) {}
 

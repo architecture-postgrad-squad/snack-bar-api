@@ -1,11 +1,10 @@
-import { ForbiddenException, Inject, PreconditionFailedException } from "@nestjs/common";
+import { PreconditionFailedException } from "@nestjs/common";
 import { Client } from "@/domain/entity/client/client.entity";
-import { ClientRepository } from "@/domain/repository/client/client.repository";
+import { ClientRepository } from "@/datasource/client.repository";
 import { ClientWriterServicePort } from "@/domain/interactor/port/client/client-writer-service.port";
 
 export class ClientWriterService implements ClientWriterServicePort {
     constructor(
-        @Inject(ClientRepository)
         private readonly clientRepository: ClientRepository
     ) {}
 

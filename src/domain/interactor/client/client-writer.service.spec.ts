@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PreconditionFailedException } from '@nestjs/common';
 import { ClientWriterService } from '@/domain/interactor/client/client-writer.service';
-import { ClientRepository } from '@/domain/repository/client/client.repository';
+import { ClientRepository } from '@/datasource/client.repository';
 import { Client } from '@/domain/entity/client/client.entity';
 
 describe('ClientWriterService', () => {

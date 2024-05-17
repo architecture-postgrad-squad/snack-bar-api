@@ -3,14 +3,15 @@ import { ClientReaderService } from "@/domain/interactor/client/client-reader.se
 import { ClientWriterService } from "@/domain/interactor/client/client-writer.service";
 import { ClientReaderServicePort } from "@/domain/interactor/port/client/client-reader-service.port";
 import { ClientWriterServicePort } from "@/domain/interactor/port/client/client-writer-service.port";
-import { ClientRepository } from "@/domain/repository/client/client.repository";
+import { ClientRepository } from "@/datasource/client.repository";
 import { ClientController } from "@/transport/controller/client/client.controller";
 import { Module } from "@nestjs/common";
+import { DatasourceModule } from "@/datasource/datasource.module";
 
 @Module({
-    imports: [],
+    imports: [DatasourceModule],
     controllers: [ClientController],
-    providers: [
+    providers: [ 
         {
             provide: ClientWriterServicePort,
             useClass: ClientWriterService,
@@ -19,10 +20,7 @@ import { Module } from "@nestjs/common";
             provide: ClientReaderServicePort,
             useClass: ClientReaderService,
         },
-        {
-            provide: ClientRepository,
-            useClass: ClientPostgreAdapter,
-        },
     ],
-  })
-  export class ClientModule {}
+    // exports: [ClientWriterServicePort, ClientReaderServicePort, ClientRepository]
+})
+export class ClientModule { }

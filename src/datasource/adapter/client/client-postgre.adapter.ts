@@ -1,9 +1,7 @@
 import { PrismaService } from "@/config/prisma.config";
 import { Client } from "@/domain/entity/client/client.entity";
-import { ClientRepository } from "@/domain/repository/client/client.repository";
-import { Injectable } from "@nestjs/common";
+import { ClientRepository } from "@/datasource/client.repository";
 
-@Injectable()
 export class ClientPostgreAdapter implements ClientRepository {
     constructor(private readonly prisma: PrismaService) {}
     
