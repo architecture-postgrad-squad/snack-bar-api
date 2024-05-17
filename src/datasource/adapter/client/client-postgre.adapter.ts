@@ -21,7 +21,7 @@ export class ClientPostgreAdapter implements ClientRepository {
         });
     }
 
-    getById(id: string): Promise<Client> {
+    findById(id: string): Promise<Client> {
         return this.prisma.client.findUnique({
             where: {
               id: id,
@@ -29,7 +29,7 @@ export class ClientPostgreAdapter implements ClientRepository {
         });
     }
 
-    getAll(): Promise<Client[]> {
+    findAll(): Promise<Client[]> {
         return this.prisma.client.findMany()
     }
 

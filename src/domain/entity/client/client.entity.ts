@@ -10,4 +10,8 @@ export class Client {
         this.cpf = cpf
         this.name = name
     }
+
+    isValid?() {
+        return this.cpf || (this.email && this.name)
+    }
 }
