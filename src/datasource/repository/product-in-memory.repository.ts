@@ -1,9 +1,8 @@
-import { ProductRepository } from '@/domain/repository/product.repository';
-import { Injectable } from '@nestjs/common';
+import { ProductDatabaseAdapter } from '@/datasource/adapters/product.adapter';
 import { Prisma, PrismaClient, Product } from '@prisma/client';
 
-@Injectable()
-export class ProductInMemoryAdapter implements ProductRepository {
+export class ProductInMemoryRepository implements ProductDatabaseAdapter {
+  //TODO: update this repository so that it uses prisma client service
   prisma = new PrismaClient();
 
   async create(product: Prisma.ProductCreateInput): Promise<Product> {
