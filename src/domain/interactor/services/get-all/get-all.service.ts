@@ -1,31 +1,29 @@
+import { ProductDatabaseAdapter } from '@/datasource/adapters/product.adapter';
 import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
-import { ProductRepository } from '@/domain/repository/product.repository';
-import { FindAllProductsResponseDto } from '@/transport/dto/product/find-all/response/find-all-response.dto';
-import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { GetAllProductsResponseDto } from '@/transport/dto/product/get-all/response/get-all-response.dto';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Product } from '@prisma/client';
 
 @Injectable()
 export class GetAllService implements ProductServicePort {
-  constructor(
-    @Inject(ProductRepository)
-    private readonly productRepository: ProductRepository,
-  ) {}
+  constructor(private readonly productDbAdapter: ProductDatabaseAdapter) {}
 
-  async getAll(): Promise<FindAllProductsResponseDto> {
+  async getAll(): Promise<GetAllProductsResponseDto> {
     const productList = await this.find();
     return this.formatResponse(productList);
   }
 
   private async find(): Promise<Product[]> {
     try {
-      return await this.productRepository.findAll();
+      return await this.productDbAdapter.findAll();
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      //TODO: update this to custom exceptions from development branch
       throw new InternalServerErrorException();
     }
   }
 
-  private formatResponse(productList: Product[]): FindAllProductsResponseDto {
+  private formatResponse(productList: Product[]): GetAllProductsResponseDto {
     return {
       products: productList,
     };

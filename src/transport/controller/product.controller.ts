@@ -10,7 +10,6 @@ import {
   Controller,
   Get,
   HttpStatus,
-  Inject,
   InternalServerErrorException,
   NotFoundException,
   Param,
@@ -29,10 +28,7 @@ const { CREATE, GET_ALL, GET_BY_ID } = PRODUCT.API_PROPERTY;
 @Controller('product')
 @ApiTags('Product')
 export class ProductController {
-  constructor(
-    @Inject(ProductServicePort)
-    private readonly productService: ProductServicePort,
-  ) {}
+  constructor(private readonly productService: ProductServicePort) {}
 
   @Post('/')
   @ApiOperation({

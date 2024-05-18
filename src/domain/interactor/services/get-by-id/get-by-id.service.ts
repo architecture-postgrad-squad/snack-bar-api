@@ -1,15 +1,12 @@
+import { ProductDatabaseAdapter } from '@/datasource/adapters/product.adapter';
 import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
-import { ProductRepository } from '@/domain/repository/product.repository';
 import { ProductDto } from '@/transport/dto/product/nested/product.dto';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Product } from '@prisma/client';
 
 @Injectable()
 export class GetByIdService implements ProductServicePort {
-  constructor(
-    @Inject(ProductRepository)
-    private readonly productRepository: ProductRepository,
-  ) {}
+  constructor(private readonly productDbAdapter: ProductDatabaseAdapter) {}
 
   async getById(id: string): Promise<ProductDto> {
     return this.find(id);
@@ -17,9 +14,10 @@ export class GetByIdService implements ProductServicePort {
 
   private async find(id: string): Promise<Product> {
     try {
-      return await this.productRepository.findAById(id);
+      return await this.productDbAdapter.findAById(id);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      //TODO: udpate this to custom exception from development branch
       throw new NotFoundException();
     }
   }

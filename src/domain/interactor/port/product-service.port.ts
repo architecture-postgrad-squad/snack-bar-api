@@ -3,10 +3,8 @@ import { CreateProductResponseDto } from '@/transport/dto/product/create/respons
 import { GetAllProductsResponseDto } from '@/transport/dto/product/get-all/response/get-all-response.dto';
 import { ProductDto } from '@/transport/dto/product/nested/product.dto';
 
-export interface ProductServicePort {
-  create?(requestBody: CreateProductBodyDto): Promise<CreateProductResponseDto>;
-  getAll?(): Promise<GetAllProductsResponseDto>;
-  getById?(id: string): Promise<ProductDto>;
+export abstract class ProductServicePort {
+  abstract create?(requestBody: CreateProductBodyDto): Promise<CreateProductResponseDto>;
+  abstract getAll?(): Promise<GetAllProductsResponseDto>;
+  abstract getById?(id: string): Promise<ProductDto>;
 }
-
-export const ProductServicePort = Symbol('ProductServicePort');
