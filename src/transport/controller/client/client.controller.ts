@@ -1,8 +1,8 @@
 import { Client } from '@/domain/entity/client/client.entity';
 import { ClientReaderServicePort } from '@/domain/interactor/port/client/client-reader-service.port';
 import { ClientWriterServicePort } from '@/domain/interactor/port/client/client-writer-service.port';
-import { CreateClientDTO } from '@/transport/dto/Client/create-client.dto';
-import { UpdateClientDTO } from '@/transport/dto/Client/update-client.dto';
+import { CreateClientDto } from '@/transport/dto/Client/create-client.dto';
+import { UpdateClientDto } from '@/transport/dto/Client/update-client.dto';
 import {
   Body,
   Controller,
@@ -49,7 +49,7 @@ export class ClientController {
     type: Client,
   })
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createClient: CreateClientDTO) {
+  async create(@Body() createClient: CreateClientDto) {
     return this.clientWriterService.create({
       ...createClient,
     });
@@ -58,7 +58,7 @@ export class ClientController {
   @Patch(':id')
   @ApiOperation({ summary: 'Update client' })
   @ApiResponse({ status: HttpStatus.OK, description: 'The updated client', type: Client })
-  async update(@Body() editClient: UpdateClientDTO, @Param('id') id: string) {
+  async update(@Body() editClient: UpdateClientDto, @Param('id') id: string) {
     return this.clientWriterService.update({
       ...editClient,
       id: id,

@@ -1,8 +1,8 @@
 import { Client } from '@/domain/entity/client/client.entity';
-import { CreateClientDTO } from '@/transport/dto/Client/create-client.dto';
-import { UpdateClientDTO } from '@/transport/dto/Client/update-client.dto';
+import { CreateClientDto } from '@/transport/dto/Client/create-client.dto';
+import { UpdateClientDto } from '@/transport/dto/Client/update-client.dto';
 
 export abstract class ClientWriterServicePort {
-  abstract create(client: CreateClientDTO): Promise<Client>;
-  abstract update(client: UpdateClientDTO): Promise<Client>;
+  abstract create(client: CreateClientDto): Promise<Client>;
+  abstract update(client: UpdateClientDto): Promise<Client>;
 }
