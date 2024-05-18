@@ -5,13 +5,13 @@ import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common
 import { Product } from '@prisma/client';
 
 @Injectable()
-export class FindAllService implements ProductServicePort {
+export class GetAllService implements ProductServicePort {
   constructor(
     @Inject(ProductRepository)
     private readonly productRepository: ProductRepository,
   ) {}
 
-  async findAll(): Promise<FindAllProductsResponseDto> {
+  async getAll(): Promise<FindAllProductsResponseDto> {
     const productList = await this.find();
     return this.formatResponse(productList);
   }

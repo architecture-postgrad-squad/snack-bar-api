@@ -5,13 +5,13 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Product } from '@prisma/client';
 
 @Injectable()
-export class FindByIdService implements ProductServicePort {
+export class GetByIdService implements ProductServicePort {
   constructor(
     @Inject(ProductRepository)
     private readonly productRepository: ProductRepository,
   ) {}
 
-  async findById(id: string): Promise<ProductDto> {
+  async getById(id: string): Promise<ProductDto> {
     return this.find(id);
   }
 

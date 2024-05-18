@@ -1,8 +1,17 @@
 export const PRODUCT = {
   API_PROPERTY: {
-    CREATE: 'Creates a product register',
-    GET_ALL: 'Fetches all registered products in database',
-    GET_BY_ID: 'Fetches product by identifier in database',
+    CREATE: {
+      SUMMARY: 'Creates a product register',
+      DESC: 'Creates a product register in database',
+    },
+    GET_ALL: {
+      SUMMARY: 'Gets all registered products in database',
+      DESC: 'Fetches all product register from database',
+    },
+    GET_BY_ID: {
+      SUMMARY: 'Gets product by identifier',
+      DESC: 'Fetches product register from database by identifier',
+    },
   },
   ID: {
     DESC: 'Product identifier in database',
