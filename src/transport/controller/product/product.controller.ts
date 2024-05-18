@@ -1,12 +1,9 @@
-import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
-import { Controller, Get, Inject } from '@nestjs/common';
+import { ProductReaderServicePort } from '@/domain/interactor/port/product/product-reader-service.port';
+import { Controller, Get } from '@nestjs/common';
 
 @Controller('product')
 export class ProductController {
-  constructor(
-    @Inject(ProductServicePort)
-    private readonly productService: ProductServicePort,
-  ) {}
+  constructor(private readonly productService: ProductReaderServicePort) {}
 
   @Get()
   async findAll() {

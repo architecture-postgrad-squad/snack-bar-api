@@ -1,33 +1,21 @@
 import { Payment } from '@/domain/entity/payment/payment.entity';
-import { PaymentService } from '@/domain/interactor/payment/payment.service';
-import { PaymentRepository } from '@/domain/repository/payment/payment.repository';
-import { CreatePaymentDto } from '@/transport/dto/payment.dto';
+import { PaymentWriterService } from '@/domain/interactor/payment/payment-writer.service';
+import { IPaymentRepository } from '@/domain/repository/payment/payment.repository';
+import { CreatePaymentDto } from '@/transport/dto/Payment/payment.dto';
 import { HttpException } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
 
 describe('PaymentService', () => {
-  let service: PaymentService;
-  let paymentRepository: PaymentRepository;
+  let service: PaymentWriterService;
+  let paymentRepository: IPaymentRepository;
 
   beforeEach(async () => {
-    const mockPaymentRepository = {
+    paymentRepository = {
       create: jest.fn((payment) =>
         Promise.resolve({ ...payment, id: 'some-id', createdAt: new Date() }),
       ),
     };
 
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        PaymentService,
-        {
-          provide: PaymentRepository,
-          useValue: mockPaymentRepository,
-        },
-      ],
-    }).compile();
-
-    service = module.get<PaymentService>(PaymentService);
-    paymentRepository = module.get<PaymentRepository>(PaymentRepository);
+    service = new PaymentWriterService(paymentRepository);
   });
 
   it('should create a payment and return it', async () => {

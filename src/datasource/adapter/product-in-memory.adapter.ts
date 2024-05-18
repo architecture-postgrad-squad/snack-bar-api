@@ -1,9 +1,9 @@
 import { Product } from '@/domain/entity/product/product.entity';
-import { ProductRepository } from '@/domain/repository/product/product.repository';
+import { IProductRepository } from '@/domain/repository/product/product.repository';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class ProductInMemoryAdapter implements ProductRepository {
+export class ProductInMemoryAdapter implements IProductRepository {
   findAll(): Product[] {
     return [];
   }

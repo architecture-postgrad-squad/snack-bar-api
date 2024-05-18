@@ -1,6 +1,5 @@
 import { Product } from '@/domain/entity/product/product.entity';
 
-export interface ProductRepository {
-  findAll(): Product[];
+export abstract class IProductRepository {
+  abstract findAll(): Product[];
 }
-export const ProductRepository = Symbol('ProductRepository');

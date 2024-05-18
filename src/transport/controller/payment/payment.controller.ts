@@ -1,16 +1,13 @@
 import { Payment } from '@/domain/entity/payment/payment.entity';
-import { PaymentServicePort } from '@/domain/interactor/port/payment-service.port';
-import { CreatePaymentDto } from '@/transport/dto/payment.dto';
-import { Body, Controller, HttpStatus, Inject, Post } from '@nestjs/common';
+import { PaymentWriterServicePort } from '@/domain/interactor/port/payment/payment-writer-service.port';
+import { CreatePaymentDto } from '@/transport/dto/Payment/payment.dto';
+import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('payments')
 @ApiTags('payments')
 export class PaymentController {
-  constructor(
-    @Inject(PaymentServicePort)
-    private readonly paymentService: PaymentServicePort,
-  ) {}
+  constructor(private readonly paymentService: PaymentWriterServicePort) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a payment' })
