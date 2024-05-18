@@ -1,10 +1,10 @@
-import { PaymentService } from '@/domain/interactor/payment/payment.service';
-import { PaymentServicePort } from '@/domain/interactor/port/payment/payment-service.port';
-import { PaymentRepository } from '@/domain/repository/payment/payment.repository';
+import { PrismaService } from '@/config/prisma.config';
+import { PaymentWriterService } from '@/domain/interactor/payment/payment-writer.service';
+import { PaymentWriterServicePort } from '@/domain/interactor/port/payment/payment-writer-service.port';
+import { IPaymentRepository } from '@/domain/repository/payment/payment.repository';
 import { PrismaPaymentRepository } from '@/infrastructure/persistence/prisma/prisma-payment.repository';
 import { PaymentController } from '@/transport/controller/payment/payment.controller';
 import { Module } from '@nestjs/common';
-import { PrismaService } from '@/config/prisma.config';
 
 @Module({
   imports: [],
@@ -12,11 +12,14 @@ import { PrismaService } from '@/config/prisma.config';
   providers: [
     PrismaService,
     {
-      provide: PaymentServicePort,
-      useClass: PaymentService,
+      provide: PaymentWriterServicePort,
+      useFactory: (paymentRepository: IPaymentRepository) => {
+        return new PaymentWriterService(paymentRepository);
+      },
+      inject: [IPaymentRepository],
     },
     {
-      provide: PaymentRepository,
+      provide: IPaymentRepository,
       useClass: PrismaPaymentRepository,
     },
   ],

@@ -1,34 +1,41 @@
-import { PrismaService } from "@/config/prisma.config";
-import { Client } from "@/domain/entity/client/client.entity";
-import { ClientRepository } from "@/datasource/client.repository";
+import { PrismaService } from '@/config/prisma.config';
+import { Client } from '@/domain/entity/client/client.entity';
+import { IClientRepository } from '@/domain/repository/client/client.repository';
+import { CreateClientDTO } from '@/transport/dto/Client/create-client.dto';
+import { UpdateClientDTO } from '@/transport/dto/Client/update-client.dto';
+import { Injectable } from '@nestjs/common';
 
-export class ClientPostgreAdapter implements ClientRepository {
-    constructor(private readonly prisma: PrismaService) {}
-    
-    save(client: Client): Promise<Client> {
-        return this.prisma.client.upsert({
-            where: {
-              id: client.id,
-            },
-            update: {
-              ...client,
-            },
-            create: {
-              ...client,
-            },
-        });
-    }
+@Injectable()
+export class ClientPostgreAdapter implements IClientRepository {
+  constructor(private readonly prisma: PrismaService) { }
 
-    findById(id: string): Promise<Client> {
-        return this.prisma.client.findUnique({
-            where: {
-              id: id,
-            },
-        });
-    }
+  create(client: CreateClientDTO): Promise<Client> {
+    return this.prisma.client.create({
+      data: {
+        ...client,
+      },
 
-    findAll(): Promise<Client[]> {
-        return this.prisma.client.findMany()
-    }
+    });
+  }
 
+  update(client: UpdateClientDTO): Promise<Client> {
+    return this.prisma.client.update({
+      where: { id: client.id },
+      data: {
+        ...client,
+      },
+    });
+  }
+
+  findById(id: string): Promise<Client> {
+    return this.prisma.client.findUnique({
+      where: {
+        id: id,
+      },
+    });
+  }
+
+  findAll(): Promise<Client[]> {
+    return this.prisma.client.findMany();
+  }
 }

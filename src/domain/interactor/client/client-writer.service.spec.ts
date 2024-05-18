@@ -1,27 +1,21 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { PreconditionFailedException } from '@nestjs/common';
-import { ClientWriterService } from '@/domain/interactor/client/client-writer.service';
-import { ClientRepository } from '@/datasource/client.repository';
 import { Client } from '@/domain/entity/client/client.entity';
+import { ClientWriterService } from '@/domain/interactor/client/client-writer.service';
+import { IClientRepository } from '@/domain/repository/client/client.repository';
+import { PreconditionFailedException } from '@nestjs/common';
 
 describe('ClientWriterService', () => {
   let service: ClientWriterService;
-  let clientRepository: Partial<ClientRepository>;
+  let clientRepository: IClientRepository;
 
   beforeEach(async () => {
     clientRepository = {
-      save: jest.fn(),
+      create: jest.fn(),
+      update: jest.fn(),
       findById: jest.fn(),
+      findAll: jest.fn(),
     };
 
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        ClientWriterService,
-        { provide: ClientRepository, useValue: clientRepository },
-      ],
-    }).compile();
-
-    service = module.get<ClientWriterService>(ClientWriterService);
+    service = new ClientWriterService(clientRepository);
   });
 
   it('should be defined', () => {
@@ -30,18 +24,29 @@ describe('ClientWriterService', () => {
 
   describe('create', () => {
     it('should save a valid client', async () => {
-      const client = new Client('1', 'Gandalf The Grey', 'gandalf.gray@example.com', '123456789');
-      client.isValid = jest.fn().mockReturnValue(true);
+      const client = {
+        name: 'Gandalf The Grey',
+        email: 'gandalf.gray@example.com',
+        cpf: '12345678910',
+      };
 
-      (clientRepository.save as jest.Mock).mockResolvedValue(client);
-
-      expect(await service.create(client)).toBe(client);
-      expect(clientRepository.save).toHaveBeenCalledWith(client);
+      const expectedClient = {
+        id: '1',
+        ...client,
+      };
+      jest.spyOn(clientRepository, 'create').mockResolvedValue(expectedClient);
+      const createdClient = await service.create(client);
+      expect(createdClient).toBe(expectedClient);
+      expect(clientRepository.create).toHaveBeenCalledWith(client);
     });
 
     it('should throw PreconditionFailedException for an invalid client', async () => {
-      const client = new Client('1', '', '', ''); 
-      client.isValid = jest.fn().mockReturnValue(false);
+      const client = {
+        id: '1',
+        name: '',
+        email: '',
+        cpf: '',
+      };
 
       await expect(service.create(client)).rejects.toThrow(PreconditionFailedException);
     });
@@ -49,33 +54,61 @@ describe('ClientWriterService', () => {
 
   describe('update', () => {
     it('should update an existing client', async () => {
-      const existingClient = new Client('1', 'Gandalf The Grey', 'gandalf.gray@example.com', '123456789');
-      const updatedClient = new Client('1', 'Radagast The Brown', 'radagast.brown@example.com', '987654321');
-      updatedClient.isValid = jest.fn().mockReturnValue(true);
+      const existingClient = {
+        id: '1',
+        name: 'Gandalf The Grey',
+        email: 'gandalf.gray@example.com',
+        cpf: '123456789',
+      };
+      const updatedClient = {
+        id: '1',
+        name: 'Radagast The Brown',
+        email: 'radagast.brown@example.com',
+        cpf: '987654321',
+      };
 
       (clientRepository.findById as jest.Mock).mockResolvedValue(existingClient);
-      (clientRepository.save as jest.Mock).mockResolvedValue(updatedClient);
+      (clientRepository.update as jest.Mock).mockResolvedValue(updatedClient);
 
       expect(await service.update(updatedClient)).toBe(updatedClient);
       expect(clientRepository.findById).toHaveBeenCalledWith('1');
-      expect(clientRepository.save).toHaveBeenCalledWith(updatedClient);
+      expect(clientRepository.update).toHaveBeenCalledWith(updatedClient);
     });
 
     it('should throw PreconditionFailedException for an invalid updated client', async () => {
-      const existingClient = new Client('1', 'Gandalf The Grey', 'gandalf.gray@example.com', '123456789');
-      const updatedClient = new Client('1', '', '', '');
-      updatedClient.isValid = jest.fn().mockReturnValue(false);
+      const existingClient = {
+        id: '1',
+        name: 'Gandalf The Grey',
+        email: 'gandalf.gray@example.com',
+        cpf: '123456789',
+      };
 
-      (clientRepository.findById as jest.Mock).mockResolvedValue(existingClient);
+      const updatedClient = {
+        id: '1',
+        name: '',
+        email: '',
+        cpf: '',
+      };
+ 
+      jest.spyOn(clientRepository, 'findById').mockResolvedValue(existingClient);
 
-      await expect(service.update(updatedClient)).rejects.toThrow(PreconditionFailedException);
+      await expect(service.update(updatedClient)).rejects.toThrow(
+        PreconditionFailedException,
+      );
+
     });
 
     it('should throw an error if the client does not exist', async () => {
-      const client = new Client('1', 'Gandalf The Grey', 'gandalf.gray@example.com', '123456789');
-      client.isValid = jest.fn().mockReturnValue(true);
+      const client = {
+        id: '1',
+        name: 'Gandalf The Grey',
+        email: 'gandalf.gray@example.com',
+        cpf: '123456789',
+      };
 
-      (clientRepository.findById as jest.Mock).mockRejectedValue(new Error('Client not found'));
+      (clientRepository.findById as jest.Mock).mockRejectedValue(
+        new Error('Client not found'),
+      );
 
       await expect(service.update(client)).rejects.toThrow(Error);
     });

@@ -1,14 +1,11 @@
 import { Product } from '@/domain/entity/product/product.entity';
-import { ProductServicePort } from '@/domain/interactor/port/product/product-service.port';
-import { ProductRepository } from '@/domain/repository/product/product.repository';
-import { Inject, Injectable } from '@nestjs/common';
+import { ProductReaderServicePort } from '@/domain/interactor/port/product/product-reader-service.port';
+import { IProductRepository } from '@/domain/repository/product/product.repository';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class ProductService implements ProductServicePort {
-  constructor(
-    @Inject(ProductRepository)
-    private readonly productRepository: ProductRepository,
-  ) {}
+export class ProductService implements ProductReaderServicePort {
+  constructor(private readonly productRepository: IProductRepository) {}
 
   async findAll(): Promise<Product[]> {
     return this.productRepository.findAll();
