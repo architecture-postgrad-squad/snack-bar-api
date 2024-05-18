@@ -2,8 +2,8 @@ import { BadRequestException } from '@/config/exceptions/custom-exceptions/bad-r
 import { Client } from '@/domain/entity/client/client.entity';
 import { ClientWriterServicePort } from '@/domain/interactor/port/client/client-writer-service.port';
 import { IClientRepository } from '@/domain/repository/client/client.repository';
-import { CreateClientDto } from '@/transport/dto/Client/create-client.dto';
-import { UpdateClientDto } from '@/transport/dto/Client/update-client.dto';
+import { CreateClientDto } from '@/transport/dto/client/client.dto';
+import { UpdateClientDto } from '@/transport/dto/client/update-client.dto';
 import { PreconditionFailedException } from '@nestjs/common';
 
 export class ClientWriterService implements ClientWriterServicePort {

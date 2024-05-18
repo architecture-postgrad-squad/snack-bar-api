@@ -1,7 +1,7 @@
 import { Payment } from '@/domain/entity/payment/payment.entity';
 import { PaymentWriterService } from '@/domain/interactor/payment/payment-writer.service';
 import { IPaymentRepository } from '@/domain/repository/payment/payment.repository';
-import { CreatePaymentDto } from '@/transport/dto/Payment/payment.dto';
+import { CreatePaymentDto } from '@/transport/dto/payment/request/payment.dto';
 import { HttpException } from '@nestjs/common';
 
 describe('PaymentService', () => {

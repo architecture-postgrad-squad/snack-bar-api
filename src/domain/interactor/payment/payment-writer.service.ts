@@ -2,7 +2,7 @@ import { InternalServerErrorException } from '@/config/exceptions/custom-excepti
 import { Payment } from '@/domain/entity/payment/payment.entity';
 import { PaymentWriterServicePort } from '@/domain/interactor/port/payment/payment-writer-service.port';
 import { IPaymentRepository } from '@/domain/repository/payment/payment.repository';
-import { CreatePaymentDto } from '@/transport/dto/Payment/payment.dto';
+import { CreatePaymentDto } from '@/transport/dto/payment/request/payment.dto';
 
 export class PaymentWriterService implements PaymentWriterServicePort {
   constructor(private readonly paymentRepository: IPaymentRepository) {}

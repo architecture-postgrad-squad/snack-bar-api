@@ -1,8 +1,8 @@
 import { PrismaService } from '@/config/prisma.config';
 import { Client } from '@/domain/entity/client/client.entity';
 import { IClientRepository } from '@/domain/repository/client/client.repository';
-import { CreateClientDto } from '@/transport/dto/Client/create-client.dto';
-import { UpdateClientDto } from '@/transport/dto/Client/update-client.dto';
+import { CreateClientDto } from '@/transport/dto/client/client.dto';
+import { UpdateClientDto } from '@/transport/dto/client/update-client.dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
