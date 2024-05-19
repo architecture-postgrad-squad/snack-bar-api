@@ -5,7 +5,7 @@ import { CreatePaymentDto } from '@/transport/dto/payment/request/payment.dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class PrismaPaymentRepository implements IPaymentRepository {
+export class PaymentPostgresAdapter implements IPaymentRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(payment: CreatePaymentDto): Promise<Payment> {

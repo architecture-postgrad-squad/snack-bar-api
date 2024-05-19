@@ -1,8 +1,8 @@
 import { PrismaService } from '@/config/prisma.config';
+import { PaymentPostgresAdapter } from '@/datasource/adapter/payment/payment-postgres.adapter';
 import { PaymentWriterService } from '@/domain/interactor/payment/payment-writer.service';
 import { PaymentWriterServicePort } from '@/domain/interactor/port/payment/payment-writer-service.port';
 import { IPaymentRepository } from '@/domain/repository/payment/payment.repository';
-import { PrismaPaymentRepository } from '@/infrastructure/persistence/prisma/prisma-payment.repository';
 import { PaymentController } from '@/transport/controller/payment.controller';
 import { Module } from '@nestjs/common';
 
@@ -20,7 +20,7 @@ import { Module } from '@nestjs/common';
     },
     {
       provide: IPaymentRepository,
-      useClass: PrismaPaymentRepository,
+      useClass: PaymentPostgresAdapter,
     },
   ],
 })

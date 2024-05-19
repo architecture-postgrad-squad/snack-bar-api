@@ -6,7 +6,7 @@ import { UpdateClientDto } from '@/transport/dto/client/update-client.dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class ClientPostgreAdapter implements IClientRepository {
+export class ClientPostgresAdapter implements IClientRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   create(client: CreateClientDto): Promise<Client> {

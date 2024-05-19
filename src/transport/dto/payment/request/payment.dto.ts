@@ -2,7 +2,7 @@ import { PAYMENT } from '@/transport/constant/payment.constant';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-const { VALUE, METHOD } = PAYMENT.API_PROPERTY.PRODUCT;
+const { VALUE, METHOD } = PAYMENT.API_PROPERTY.PAYMENT;
 
 export class CreatePaymentDto {
   @IsNumber()
