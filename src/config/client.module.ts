@@ -4,7 +4,7 @@ import { ClientWriterService } from '@/domain/interactor/client/client-writer.se
 import { ClientReaderServicePort } from '@/domain/interactor/port/client/client-reader-service.port';
 import { ClientWriterServicePort } from '@/domain/interactor/port/client/client-writer-service.port';
 import { IClientRepository } from '@/domain/repository/client/client.repository';
-import { ClientController } from '@/transport/controller/client/client.controller';
+import { ClientController } from '@/transport/controller/client.controller';
 import { Module } from '@nestjs/common';
 import { PrismaService } from './prisma.config';
 

@@ -1,7 +1,6 @@
-import { Client } from '@/domain/entity/client/client.entity';
+import { BadRequestException } from '@/config/exceptions/custom-exceptions/bad-request.exception'; 
 import { ClientWriterService } from '@/domain/interactor/client/client-writer.service';
 import { IClientRepository } from '@/domain/repository/client/client.repository';
-import { PreconditionFailedException } from '@nestjs/common';
 
 describe('ClientWriterService', () => {
   let service: ClientWriterService;
@@ -40,7 +39,7 @@ describe('ClientWriterService', () => {
       expect(clientRepository.create).toHaveBeenCalledWith(client);
     });
 
-    it('should throw PreconditionFailedException for an invalid client', async () => {
+    it('should throw BadRequestException for an invalid client', async () => {
       const client = {
         id: '1',
         name: '',
@@ -48,7 +47,7 @@ describe('ClientWriterService', () => {
         cpf: '',
       };
 
-      await expect(service.create(client)).rejects.toThrow(PreconditionFailedException);
+      await expect(service.create(client)).rejects.toThrow(BadRequestException);
     });
   });
 
@@ -75,7 +74,7 @@ describe('ClientWriterService', () => {
       expect(clientRepository.update).toHaveBeenCalledWith(updatedClient);
     });
 
-    it('should throw PreconditionFailedException for an invalid updated client', async () => {
+    it('should throw BadRequestException for an invalid updated client', async () => {
       const existingClient = {
         id: '1',
         name: 'Gandalf The Grey',
@@ -93,7 +92,7 @@ describe('ClientWriterService', () => {
       jest.spyOn(clientRepository, 'findById').mockResolvedValue(existingClient);
 
       await expect(service.update(updatedClient)).rejects.toThrow(
-        PreconditionFailedException,
+        BadRequestException,
       );
 
     });

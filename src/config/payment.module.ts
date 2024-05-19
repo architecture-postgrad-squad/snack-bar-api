@@ -3,7 +3,7 @@ import { PaymentWriterService } from '@/domain/interactor/payment/payment-writer
 import { PaymentWriterServicePort } from '@/domain/interactor/port/payment/payment-writer-service.port';
 import { IPaymentRepository } from '@/domain/repository/payment/payment.repository';
 import { PrismaPaymentRepository } from '@/infrastructure/persistence/prisma/prisma-payment.repository';
-import { PaymentController } from '@/transport/controller/payment/payment.controller';
+import { PaymentController } from '@/transport/controller/payment.controller';
 import { Module } from '@nestjs/common';
 
 @Module({
