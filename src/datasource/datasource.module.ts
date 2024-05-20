@@ -1,7 +1,7 @@
+import { ProductDatabaseAdapter } from '@/datasource/adapter/product.adapter';
+import { ProductInMemoryRepository } from '@/datasource/repository/product-in-memory.repository';
 import { Module } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { ProductDatabaseAdapter } from './adapters/product.adapter';
-import { ProductInMemoryRepository } from './repository/product-in-memory.repository';
 
 @Module({
   imports: [],

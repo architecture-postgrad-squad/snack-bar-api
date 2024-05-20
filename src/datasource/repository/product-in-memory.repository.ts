@@ -1,11 +1,11 @@
-import { ProductDatabaseAdapter } from '@/datasource/adapters/product.adapter';
-import { Prisma, PrismaClient, Product } from '@prisma/client';
+import { ProductDatabaseAdapter } from '@/datasource/adapter/product.adapter';
+import { PrismaClient, Product } from '@prisma/client';
 
 export class ProductInMemoryRepository implements ProductDatabaseAdapter {
   //TODO: update this repository so that it uses prisma client service
   prisma = new PrismaClient();
 
-  async create(product: Prisma.ProductCreateInput): Promise<Product> {
+  async create(product: Product): Promise<Product> {
     return await this.prisma.product.create({
       data: {
         ...product,

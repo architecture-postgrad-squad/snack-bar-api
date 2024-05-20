@@ -1,5 +1,5 @@
 import { Client } from '@/domain/entity/client/client.entity';
-import { ClientReaderService } from '@/domain/interactor/client/client-reader.service';
+import { ClientReaderService } from '@/domain/interactor/services/client/client-reader.service';
 import { IClientRepository } from '@/domain/repository/client/client.repository';
 
 describe('ClientReaderService', () => {

@@ -1,5 +1,5 @@
-import { ProductDatabaseAdapter } from '@/datasource/adapters/product.adapter';
-import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
+import { ProductDatabaseAdapter } from '@/datasource/adapter/product.adapter';
+import { ProductServicePort } from '@/domain/interactor/port/product/product-service.port';
 import { ProductDto } from '@/transport/dto/product/nested/product.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Product } from '@prisma/client';

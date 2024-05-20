@@ -1,5 +1,5 @@
 import { BadRequestException } from '@/config/exceptions/custom-exceptions/bad-request.exception';
-import { ClientWriterService } from '@/domain/interactor/client/client-writer.service';
+import { ClientWriterService } from '@/domain/interactor/services/client/client-writer.service';
 import { IClientRepository } from '@/domain/repository/client/client.repository';
 
 describe('ClientWriterService', () => {

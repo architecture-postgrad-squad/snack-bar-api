@@ -1,9 +1,9 @@
-import { ProductDatabaseAdapter } from '@/datasource/adapters/product.adapter';
+import { ProductDatabaseAdapter } from '@/datasource/adapter/product.adapter';
 import { Product } from '@/domain/entity/product/product.entity';
-import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
+import { ProductServicePort } from '@/domain/interactor/port/product/product-service.port';
 import { CreateProductResponseDto } from '@/transport/dto/product/create/response/create-product-response.dto';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { Product as ProductDbEntity } from '@prisma/client';
+import { Prisma, Product as ProductDbEntity } from '@prisma/client';
 
 @Injectable()
 export class CreateService implements ProductServicePort {
@@ -14,7 +14,9 @@ export class CreateService implements ProductServicePort {
     return this.formatResponse(productDbEntity);
   }
 
-  private async persistProduct(product: Product): Promise<ProductDbEntity> {
+  private async persistProduct(
+    product: Prisma.ProductCreateInput,
+  ): Promise<ProductDbEntity> {
     try {
       return await this.productDbAdapter.create(product);
     } catch (error) {

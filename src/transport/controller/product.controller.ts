@@ -17,12 +17,8 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-const {
-  CREATED_DESC,
-  INTERNAL_SERVER_EXCEPTION_DESC,
-  OK_DESC,
-  NOT_FOUND_EXCEPTION_DESC,
-} = API_RESPONSE;
+const { CREATED_DESC, INTERNAL_SERVER_EXCEPTION_DESC, OK_DESC, NOT_FOUND_DESC } =
+  API_RESPONSE;
 const { CREATE, GET_ALL, GET_BY_ID } = PRODUCT.API_PROPERTY;
 
 @Controller('product')
@@ -82,7 +78,7 @@ export class ProductController {
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: NOT_FOUND_EXCEPTION_DESC,
+    description: NOT_FOUND_DESC,
     type: () => NotFoundException,
   })
   async findById(@Param('id') id: string): Promise<ProductDto> {
