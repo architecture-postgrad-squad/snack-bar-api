@@ -9,11 +9,35 @@ export class ClientReaderService implements ClientReaderServicePort {
 
   async findById(id: string): Promise<Client> {
     try {
-      return this.clientRepository.findById(id);
+      const client = await this.clientRepository.findById(id);
+      if (!client) {
+        throw new NotFoundException({
+          description: 'Failed to find client by id',
+        });
+      }
+      return client;
     } catch (error) {
-      throw new NotFoundException({
-        description: 'Failed to find client by id`',
-      });
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async findByCpf(cpf: string): Promise<Client> {
+    try {
+      const client = await this.clientRepository.findByCpf(cpf);
+      if (!client) {
+        throw new NotFoundException({
+          description: 'Failed to find client by cpf',
+        });
+      }
+      return client;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException();
     }
   }
 

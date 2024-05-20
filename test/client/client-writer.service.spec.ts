@@ -1,4 +1,4 @@
-import { BadRequestException } from '@/config/exceptions/custom-exceptions/bad-request.exception'; 
+import { BadRequestException } from '@/config/exceptions/custom-exceptions/bad-request.exception';
 import { ClientWriterService } from '@/domain/interactor/client/client-writer.service';
 import { IClientRepository } from '@/domain/repository/client/client.repository';
 
@@ -11,6 +11,7 @@ describe('ClientWriterService', () => {
       create: jest.fn(),
       update: jest.fn(),
       findById: jest.fn(),
+      findByCpf: jest.fn(),
       findAll: jest.fn(),
     };
 
@@ -88,13 +89,10 @@ describe('ClientWriterService', () => {
         email: '',
         cpf: '',
       };
- 
+
       jest.spyOn(clientRepository, 'findById').mockResolvedValue(existingClient);
 
-      await expect(service.update(updatedClient)).rejects.toThrow(
-        BadRequestException,
-      );
-
+      await expect(service.update(updatedClient)).rejects.toThrow(BadRequestException);
     });
 
     it('should throw an error if the client does not exist', async () => {

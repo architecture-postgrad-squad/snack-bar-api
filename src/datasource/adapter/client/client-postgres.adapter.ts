@@ -34,6 +34,14 @@ export class ClientPostgresAdapter implements IClientRepository {
     });
   }
 
+  findByCpf(cpf: string): Promise<Client> {
+    return this.prisma.client.findUniqueOrThrow({
+      where: {
+        cpf: cpf,
+      },
+    });
+  }
+
   findAll(): Promise<Client[]> {
     return this.prisma.client.findMany();
   }

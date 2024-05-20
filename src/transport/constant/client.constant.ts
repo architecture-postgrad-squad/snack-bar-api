@@ -12,6 +12,10 @@ export const CLIENT = {
       SUMMARY: 'Gets client by identifier',
       DESC: 'Fetches client register from database by identifier',
     },
+    GET_BY_CPF: {
+      SUMMARY: 'Gets client by CPF',
+      DESC: 'Fetches client register from database by CPF',
+    },
     UPDATE: {
       SUMMARY: 'Updates client register',
       DESC: 'Updates client register in database by identifier',

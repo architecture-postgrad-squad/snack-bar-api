@@ -11,7 +11,7 @@ import { UpdateClientDto } from '@/transport/dto/client/update-client.dto';
 import { Body, Controller, Get, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-const { CREATE, GET_ALL, GET_BY_ID, UPDATE } = CLIENT.API_PROPERTY;
+const { CREATE, GET_ALL, GET_BY_ID, GET_BY_CPF, UPDATE } = CLIENT.API_PROPERTY;
 const {
   OK_DESC,
   CREATED_DESC,
@@ -76,6 +76,22 @@ export class ClientController {
   })
   async findById(@Param('id') id: string) {
     return this.clientReaderService.findById(id);
+  }
+
+  @Get('cpf/:cpf')
+  @ApiOperation({ summary: GET_BY_CPF.SUMMARY, description: GET_BY_CPF.DESC })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: OK_DESC,
+    type: () => Client,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: NOT_FOUND_DESC,
+    type: () => NotFoundException,
+  })
+  async findByCpf(@Param('cpf') cpf: string) {
+    return this.clientReaderService.findByCpf(cpf);
   }
 
   @Patch(':id')
