@@ -13,7 +13,7 @@ export class PaymentWriterService implements PaymentWriterServicePort {
     } catch (error) {
       console.error(error);
       throw new InternalServerErrorException({
-        description: 'Error ao processar o pagamento',
+        description: 'Failed to create payment',
       });
     }
   }

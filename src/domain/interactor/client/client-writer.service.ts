@@ -6,9 +6,8 @@ import { IClientRepository } from '@/domain/repository/client/client.repository'
 import { CreateClientDto } from '@/transport/dto/client/client.dto';
 import { UpdateClientDto } from '@/transport/dto/client/update-client.dto';
 
-
 export class ClientWriterService implements ClientWriterServicePort {
-  constructor(private readonly clientRepository: IClientRepository) { }
+  constructor(private readonly clientRepository: IClientRepository) {}
 
   async create(createClientDTO: CreateClientDto): Promise<Client> {
     const client = new Client(
