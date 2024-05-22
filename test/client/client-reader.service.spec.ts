@@ -1,6 +1,6 @@
-import { Client } from '@/domain/entity/client/client.entity';
-import { ClientReaderService } from '@/domain/interactor/services/client/client-reader.service';
-import { IClientRepository } from '@/domain/repository/client/client.repository';
+import { Client } from '@/core/domain/client/client.entity';
+import { ClientReaderService } from '@/core/interactor/services/client/client-reader.service';
+import { IClientRepository } from '@/core/repository/client/client.repository';
 
 describe('ClientReaderService', () => {
   let service: ClientReaderService;

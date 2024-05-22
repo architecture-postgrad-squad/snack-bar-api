@@ -1,31 +1,36 @@
-import { DatasourceModule } from '@/datasource/datasource.module';
-import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
-import { CreateService } from '@/domain/interactor/services/create/create.service';
-import { GetAllService } from '@/domain/interactor/services/get-all/get-all.service';
-import { GetByIdService } from '@/domain/interactor/services/get-by-id/get-by-id.service';
-import { ProductController } from '@/transport/controller/product.controller';
 import { Module } from '@nestjs/common';
+import { PrismaService } from '../prisma.config';
+import { ProductController } from '@/transport/controller/product.controller';
+import { ProductWriterServicePort } from '@/core/interactor/port/product/product-writer-service.port';
+import { ProductWriterService } from '@/core/interactor/services/product/product-writer.service';
+import { IProductRepository } from '@/core/repository/product/product.repository';
+import { ProductReaderServicePort } from '@/core/interactor/port/product/product-reader-service.port';
+import { ProductReaderService } from '@/core/interactor/services/product/product-reader.service';
+import { ProductPostgresAdapter } from '@/datasource/adapter/product/product-postgres.adapter';
 
 @Module({
-  imports: [DatasourceModule],
+  imports: [],
   controllers: [ProductController],
   providers: [
-    CreateService,
+    PrismaService,
     {
-      provide: ProductServicePort,
-      useExisting: CreateService,
+      provide: ProductWriterServicePort,
+      useFactory: (productRepository: IProductRepository) => {
+        return new ProductWriterService(productRepository);
+      },
+      inject: [IProductRepository],
     },
-    GetAllService,
     {
-      provide: ProductServicePort,
-      useExisting: GetAllService,
+      provide: ProductReaderServicePort,
+      useFactory: (productRepository: IProductRepository) => {
+        return new ProductReaderService(productRepository);
+      },
+      inject: [IProductRepository],
     },
-    GetByIdService,
     {
-      provide: ProductServicePort,
-      useExisting: GetByIdService,
+      provide: IProductRepository,
+      useClass: ProductPostgresAdapter,
     },
   ],
-  exports: [ProductServicePort],
 })
 export class ProductModule {}

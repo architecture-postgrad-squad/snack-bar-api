@@ -1,6 +1,6 @@
 import { BadRequestException } from '@/config/exceptions/custom-exceptions/bad-request.exception';
-import { ClientWriterService } from '@/domain/interactor/services/client/client-writer.service';
-import { IClientRepository } from '@/domain/repository/client/client.repository';
+import { ClientWriterService } from '@/core/interactor/services/client/client-writer.service';
+import { IClientRepository } from '@/core/repository/client/client.repository';
 
 describe('ClientWriterService', () => {
   let service: ClientWriterService;

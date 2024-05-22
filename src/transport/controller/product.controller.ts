@@ -1,17 +1,16 @@
-import { ProductServicePort } from '@/domain/interactor/port/product-service.port';
+import { Product } from '@/core/domain/product/product.entity';
+import { ProductReaderServicePort } from '@/core/interactor/port/product/product-reader-service.port';
+import { ProductWriterServicePort } from '@/core/interactor/port/product/product-writer-service.port';
 import { API_RESPONSE } from '@/transport/constant/api-response.constant';
 import { PRODUCT } from '@/transport/constant/product.constant';
 import { CreateProductBodyDto } from '@/transport/dto/product/create/request/create-product.dto';
 import { CreateProductResponseDto } from '@/transport/dto/product/create/response/create-product-response.dto';
-import { GetAllProductsResponseDto } from '@/transport/dto/product/get-all/response/get-all-response.dto';
 import { ProductDto } from '@/transport/dto/product/nested/product.dto';
 import {
   Body,
   Controller,
   Get,
   HttpStatus,
-  InternalServerErrorException,
-  NotFoundException,
   Param,
   Post,
 } from '@nestjs/common';
@@ -24,7 +23,10 @@ const { CREATE, GET_ALL, GET_BY_ID } = PRODUCT.API_PROPERTY;
 @Controller('product')
 @ApiTags('Product')
 export class ProductController {
-  constructor(private readonly productService: ProductServicePort) {}
+  constructor(
+    private readonly productReaderService: ProductReaderServicePort,
+    private readonly productWriterService: ProductWriterServicePort,
+  ) {}
 
   @Post('/')
   @ApiOperation({
@@ -36,15 +38,10 @@ export class ProductController {
     description: CREATED_DESC,
     type: () => CreateProductResponseDto,
   })
-  @ApiResponse({
-    status: HttpStatus.INTERNAL_SERVER_ERROR,
-    description: INTERNAL_SERVER_EXCEPTION_DESC,
-    type: () => InternalServerErrorException,
-  })
   async create(
     @Body() productBody: CreateProductBodyDto,
-  ): Promise<CreateProductResponseDto> {
-    return this.productService.create(productBody);
+  ): Promise<Product> {
+    return this.productWriterService.create({...productBody, category: productBody.category as CategoryEnum});
   }
 
   @Get('/')
@@ -55,15 +52,10 @@ export class ProductController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: OK_DESC,
-    type: () => GetAllProductsResponseDto,
+    type: () => Product[],
   })
-  @ApiResponse({
-    status: HttpStatus.INTERNAL_SERVER_ERROR,
-    description: INTERNAL_SERVER_EXCEPTION_DESC,
-    type: () => InternalServerErrorException,
-  })
-  async findAll(): Promise<GetAllProductsResponseDto> {
-    return this.productService.getAll();
+  async findAll(): Promise<Product[]> {
+    return this.productReaderService.getAll();
   }
 
   @Get('/:id')
@@ -74,14 +66,9 @@ export class ProductController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: OK_DESC,
-    type: () => ProductDto,
+    type: () => Product,
   })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: NOT_FOUND_DESC,
-    type: () => NotFoundException,
-  })
-  async findById(@Param('id') id: string): Promise<ProductDto> {
-    return this.productService.getById(id);
+  async findById(@Param('id') id: string): Promise<Product> {
+    return this.productReaderService.getById(id);
   }
 }

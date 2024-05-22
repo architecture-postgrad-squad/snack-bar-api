@@ -1,6 +1,6 @@
 import { PrismaService } from '@/config/prisma.config';
-import { Payment } from '@/domain/entity/payment/payment.entity';
-import { IPaymentRepository } from '@/domain/repository/payment/payment.repository';
+import { Payment } from '@/core/domain/payment/payment.entity';
+import { IPaymentRepository } from '@/core/repository/payment/payment.repository';
 import { CreatePaymentDto } from '@/transport/dto/payment/request/payment.dto';
 import { Injectable } from '@nestjs/common';
 
