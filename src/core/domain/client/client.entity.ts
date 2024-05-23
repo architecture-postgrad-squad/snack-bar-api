@@ -11,7 +11,7 @@ export class Client {
     this.cpf = cpf;
   }
 
-  isValid?() {
+  public isValid() {
     return this.cpf || (this.email && this.name);
   }
 }
