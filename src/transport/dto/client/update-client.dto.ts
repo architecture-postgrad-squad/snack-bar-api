@@ -1,13 +1,11 @@
+import { Client } from '@/core/domain/client/client.entity';
 import { CLIENT } from '@/transport/constant/client.constant';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
-const { ID, CPF, NAME, EMAIL } = CLIENT.API_PROPERTY.CLIENT;
+const { CPF, NAME, EMAIL } = CLIENT.API_PROPERTY.CLIENT;
 
 export class UpdateClientDto {
-  @IsString()
-  @ApiProperty({ example: ID.EXAMPLE, description: ID.DESC, required: true })
-  readonly id: string;
 
   @IsOptional()
   @IsString()
@@ -25,4 +23,13 @@ export class UpdateClientDto {
   @IsEmail()
   @ApiProperty({ example: EMAIL.EXAMPLE, description: EMAIL.DESC, required: true })
   readonly email: string;
+}
+
+export const toDomain = (dto: UpdateClientDto, id: string): Client => {
+  return new Client(
+    id,
+    dto.name,
+    dto.email,
+    dto.cpf
+  )
 }

@@ -1,11 +1,8 @@
-import { Product } from '@/core/domain/product/product.entity';
 import { ProductReaderServicePort } from '@/core/interactor/port/product/product-reader-service.port';
 import { ProductWriterServicePort } from '@/core/interactor/port/product/product-writer-service.port';
 import { API_RESPONSE } from '@/transport/constant/api-response.constant';
 import { PRODUCT } from '@/transport/constant/product.constant';
-import { CreateProductBodyDto } from '@/transport/dto/product/create/request/create-product.dto';
-import { CreateProductResponseDto } from '@/transport/dto/product/create/response/create-product-response.dto';
-import { ProductDto } from '@/transport/dto/product/nested/product.dto';
+import { CreateProductRequestDto, toDomain } from '@/transport/dto/product/create-product.dto';
 import {
   Body,
   Controller,
@@ -15,13 +12,15 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ProductDto, toDTO } from '@/transport/dto/product/product.dto';
+import { CategoryEnum } from '@/core/enum/product/category.enum';
 
-const { CREATED_DESC, INTERNAL_SERVER_EXCEPTION_DESC, OK_DESC, NOT_FOUND_DESC } =
+const { CREATED_DESC, OK_DESC } =
   API_RESPONSE;
-const { CREATE, GET_ALL, GET_BY_ID } = PRODUCT.API_PROPERTY;
+const { CREATE, GET_ALL, GET_BY_ID, GET_BY_CATEGORY } = PRODUCT.API_PROPERTY;
 
-@Controller('product')
-@ApiTags('Product')
+@Controller('products')
+@ApiTags('Products')
 export class ProductController {
   constructor(
     private readonly productReaderService: ProductReaderServicePort,
@@ -36,12 +35,12 @@ export class ProductController {
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: CREATED_DESC,
-    type: () => CreateProductResponseDto,
+    type: () => ProductDto,
   })
   async create(
-    @Body() productBody: CreateProductBodyDto,
-  ): Promise<Product> {
-    return this.productWriterService.create({...productBody, category: productBody.category as CategoryEnum});
+    @Body() productBody: CreateProductRequestDto,
+  ): Promise<ProductDto> {
+    return toDTO(await this.productWriterService.create(toDomain(productBody)));
   }
 
   @Get('/')
@@ -52,10 +51,10 @@ export class ProductController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: OK_DESC,
-    type: () => Product[],
+    type: () => ProductDto,
   })
-  async findAll(): Promise<Product[]> {
-    return this.productReaderService.getAll();
+  async findAll(): Promise<ProductDto[]> {
+    return (await this.productReaderService.getAll()).map((product) => (toDTO(product)));
   }
 
   @Get('/:id')
@@ -66,9 +65,23 @@ export class ProductController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: OK_DESC,
-    type: () => Product,
+    type: () => ProductDto,
   })
-  async findById(@Param('id') id: string): Promise<Product> {
-    return this.productReaderService.getById(id);
+  async findById(@Param('id') id: string): Promise<ProductDto> {
+    return toDTO(await this.productReaderService.getById(id));
+  }
+
+  @Get('category/:categoryName')
+  @ApiOperation({
+    description: GET_BY_CATEGORY.DESC,
+    summary: GET_BY_CATEGORY.SUMMARY,
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: OK_DESC,
+    type: () => ProductDto,
+  })
+  async findByCategory(@Param('categoryName') categoryName: string): Promise<ProductDto[]> {
+    return (await this.productReaderService.getByCategory(categoryName as CategoryEnum)).map((product) => (toDTO(product)));
   }
 }

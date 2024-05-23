@@ -1,5 +1,4 @@
 import { CategoryEnum } from '@/core/enum/product/category.enum';
-import { ProductImage } from '@/core/domain/product/product-image.entity';
 
 export class Product {
   readonly id?: string;
@@ -7,5 +6,14 @@ export class Product {
   readonly category: CategoryEnum;
   readonly price: number;
   readonly description?: string;
-  readonly images?: ProductImage[];
+  readonly images?: string[];
+
+  constructor(name: string, category: CategoryEnum, price: number, description: string, images?: string[], id?: string) {
+    this.id = id
+    this.category = category
+    this.name = name
+    this.price = price
+    this.description = description
+    this.images = images
+  }
 }
