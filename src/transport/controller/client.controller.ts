@@ -1,12 +1,12 @@
 import { BadRequestException } from '@/config/exceptions/custom-exceptions/bad-request.exception';
 import { InternalServerErrorException } from '@/config/exceptions/custom-exceptions/internal-server-error.exception';
 import { NotFoundException } from '@/config/exceptions/custom-exceptions/not-found.exception';
-import { Client } from '@/domain/entity/client/client.entity';
-import { ClientReaderServicePort } from '@/domain/interactor/port/client/client-reader-service.port';
-import { ClientWriterServicePort } from '@/domain/interactor/port/client/client-writer-service.port';
+import { Client } from '@/core/domain/client/client.entity';
+import { ClientReaderServicePort } from '@/core/interactor/port/client/client-reader-service.port';
+import { ClientWriterServicePort } from '@/core/interactor/port/client/client-writer-service.port';
 import { API_RESPONSE } from '@/transport/constant/api-response.constant';
 import { CLIENT } from '@/transport/constant/client.constant';
-import { CreateClientDto } from '@/transport/dto/client/client.dto';
+import { CreateClientDto } from '@/transport/dto/client/create-client.dto';
 import { UpdateClientDto } from '@/transport/dto/client/update-client.dto';
 import { Body, Controller, Get, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
