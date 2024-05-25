@@ -12,6 +12,10 @@ export const PRODUCT = {
       SUMMARY: 'Gets product by identifier',
       DESC: 'Fetches product register from database by identifier',
     },
+    GET_BY_CATEGORY: {
+      SUMMARY: 'Gets products by category',
+      DESC: 'Fetches all product by category',
+    },
   },
   ID: {
     DESC: 'Product identifier in database',

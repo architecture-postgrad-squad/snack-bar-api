@@ -1,10 +1,12 @@
+import { Product } from '@/core/domain/product/product.entity';
+import { CategoryEnum } from '@/core/enum/product/category.enum';
 import { PRODUCT } from '@/transport/constant/product.constant';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 const { NAME, CATEGORY, PRICE, DESCRIPTION, IMAGES } = PRODUCT;
 
-export class CreateProductBodyDto {
+export class CreateProductRequestDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -51,4 +53,14 @@ export class CreateProductBodyDto {
     required: false,
   })
   images?: string[];
+}
+
+export const toDomain = (dto: CreateProductRequestDto): Product => {
+  return new Product(
+    dto.name,
+    dto.category as CategoryEnum,
+    dto.price,
+    dto.description,
+    dto.images
+  )
 }

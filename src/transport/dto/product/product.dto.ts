@@ -1,3 +1,4 @@
+import { Product } from '@/core/domain/product/product.entity';
 import { PRODUCT } from '@/transport/constant/product.constant';
 import { ApiProperty } from '@nestjs/swagger';
 import { JsonValue } from '@prisma/client/runtime/library';
@@ -46,4 +47,31 @@ export class ProductDto {
     example: IMAGES.EXAMPLE,
   })
   images?: JsonValue;
+
+  constructor(
+    id: string,
+    name: string,
+    category: string,
+    price: number,
+    description?: string,
+    images?: JsonValue
+  ) {
+    this.id = id;
+    this.name = name;
+    this.category = category;
+    this.price = price;
+    this.description = description;
+    this.images = images;
+  }
+}
+
+export const toDTO = (product: Product): ProductDto => {
+  return new ProductDto(
+    product.id,
+    product.name,
+    product.category,
+    product.price,
+    product.description,
+    product.images
+  )
 }

@@ -3,21 +3,13 @@ import { NotFoundException } from '@/config/exceptions/custom-exceptions/not-fou
 import { Client } from '@/core/domain/client/client.entity';
 import { ClientWriterServicePort } from '@/core/interactor/port/client/client-writer-service.port';
 import { IClientRepository } from '@/core/repository/client/client.repository';
-import { CreateClientDto } from '@/transport/dto/client/create-client.dto';
-import { UpdateClientDto } from '@/transport/dto/client/update-client.dto';
 
 export class ClientWriterService implements ClientWriterServicePort {
   constructor(private readonly clientRepository: IClientRepository) {}
 
-  async create(createClientDTO: CreateClientDto): Promise<Client> {
-    const client = new Client(
-      null,
-      createClientDTO.name,
-      createClientDTO.email,
-      createClientDTO.cpf,
-    );
+  async create(client: Client): Promise<Client> {
     if (client.isValid()) {
-      return this.clientRepository.create(createClientDTO);
+      return this.clientRepository.create(client);
     }
 
     throw new BadRequestException({
@@ -25,18 +17,12 @@ export class ClientWriterService implements ClientWriterServicePort {
     });
   }
 
-  async update(client: UpdateClientDto): Promise<Client> {
+  async update(client: Client): Promise<Client> {
     const savedClient = await this.clientRepository.findById(client.id).catch((e) => {
       throw new NotFoundException({ description: 'Client not found' });
     });
 
-    const editedClient = new Client(
-      savedClient.id,
-      client.name,
-      client.email,
-      client.cpf,
-    );
-    if (editedClient.isValid()) {
+    if (client.isValid()) {
       return this.clientRepository.update(client);
     }
 

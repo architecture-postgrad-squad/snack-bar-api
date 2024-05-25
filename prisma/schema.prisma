@@ -31,7 +31,7 @@ model Order {
     id           String         @id @default(uuid())
     clientId     String         @db.VarChar(255)
     paymentId    String?        @unique @db.VarChar(255)
-    commands     String         @db.VarChar(255)
+    orderCode    Int            @db.Integer @default(autoincrement())
     status       String         @db.VarChar(255)
     createdAt    DateTime       @default(now())
     client       Client         @relation(fields: [clientId], references: [id])

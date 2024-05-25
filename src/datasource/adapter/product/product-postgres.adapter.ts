@@ -1,5 +1,4 @@
 import { PrismaService } from '@/config/prisma.config';
-import { ProductImage } from '@/core/domain/product/product-image.entity';
 import { Product } from '@/core/domain/product/product.entity';
 import { CategoryEnum } from '@/core/enum/product/category.enum';
 import { IProductRepository } from '@/core/repository/product/product.repository';
@@ -42,7 +41,7 @@ export class ProductPostgresAdapter implements IProductRepository {
         return {
             ...productPO, 
             category: productPO.category as CategoryEnum,
-            images: productPO.images ? productPO.images.valueOf() as ProductImage[] : []
+            images: productPO.images ? productPO.images.valueOf() as string[] : []
         }
     }
 }

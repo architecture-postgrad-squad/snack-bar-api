@@ -1,29 +1,27 @@
 import { PrismaService } from '@/config/prisma.config';
 import { Client } from '@/core/domain/client/client.entity';
 import { IClientRepository } from '@/core/repository/client/client.repository';
-import { CreateClientDto } from '@/transport/dto/client/create-client.dto';
-import { UpdateClientDto } from '@/transport/dto/client/update-client.dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ClientPostgresAdapter implements IClientRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(client: CreateClientDto): Promise<Client> {
+  create(client: Client): Promise<Client> {
     return this.prisma.client.create({
       data: {
         ...client,
       },
-    });
+    }).then((client) => (this.toDomain(client)));
   }
 
-  update(client: UpdateClientDto): Promise<Client> {
+  update(client: Client): Promise<Client> {
     return this.prisma.client.update({
       where: { id: client.id },
       data: {
         ...client,
       },
-    });
+    }).then((client) => (this.toDomain(client)));
   }
 
   findById(id: string): Promise<Client> {
@@ -31,7 +29,7 @@ export class ClientPostgresAdapter implements IClientRepository {
       where: {
         id: id,
       },
-    });
+    }).then((client) => (this.toDomain(client)));
   }
 
   findByCpf(cpf: string): Promise<Client> {
@@ -39,10 +37,14 @@ export class ClientPostgresAdapter implements IClientRepository {
       where: {
         cpf: cpf,
       },
-    });
+    }).then((client) => (this.toDomain(client)));
   }
 
   findAll(): Promise<Client[]> {
-    return this.prisma.client.findMany();
+    return this.prisma.client.findMany().then((clients) => (clients.map((client) => (this.toDomain(client)))));
+  }
+
+  private toDomain(client): Client {
+    return new Client(client.id, client.name, client.email, client.cpf)
   }
 }
