@@ -1,4 +1,5 @@
 import { Product } from '@/core/domain/product/product.entity';
+import { CategoryEnum } from '@/core/enum/product/category.enum';
 import { PRODUCT } from '@/transport/constant/product.constant';
 import { ApiProperty } from '@nestjs/swagger';
 import { JsonValue } from '@prisma/client/runtime/library';
@@ -51,7 +52,7 @@ export class ProductDto {
   constructor(
     id: string,
     name: string,
-    category: string,
+    category: CategoryEnum,
     price: number,
     description?: string,
     images?: JsonValue

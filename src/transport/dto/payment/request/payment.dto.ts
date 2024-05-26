@@ -1,8 +1,11 @@
+import { Payment } from '@/core/domain/payment/payment.entity';
+import { ORDER } from '@/transport/constant/order.constant';
 import { PAYMENT } from '@/transport/constant/payment.constant';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 const { VALUE, METHOD } = PAYMENT.API_PROPERTY.PAYMENT;
+const { ID: ORDER_ID } = ORDER.API_PROPERTY.ORDER;
 
 export class CreatePaymentDto {
   @IsNumber()
@@ -22,4 +25,17 @@ export class CreatePaymentDto {
     required: true,
   })
   readonly method: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({ description: ORDER_ID.DESC, example: ORDER_ID.EXAMPLE, required: true })
+  readonly orderId: string;
 }
+
+export const toDomain = (dto: CreatePaymentDto): Payment => {
+  return new Payment(
+    null,
+    dto.value,
+    dto.method,
+  );
+};

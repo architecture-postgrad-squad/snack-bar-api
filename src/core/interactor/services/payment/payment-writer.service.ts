@@ -2,14 +2,18 @@ import { InternalServerErrorException } from '@/config/exceptions/custom-excepti
 import { Payment } from '@/core/domain/payment/payment.entity';
 import { PaymentWriterServicePort } from '@/core/interactor/port/payment/payment-writer-service.port';
 import { IPaymentRepository } from '@/core/repository/payment/payment.repository';
-import { CreatePaymentDto } from '@/transport/dto/payment/request/payment.dto';
+import { OrderWriterServicePort } from '../../port/order/order-writer-service.port';
+import { StatusEnum } from '@/core/domain/order/status.entity';
 
 export class PaymentWriterService implements PaymentWriterServicePort {
-  constructor(private readonly paymentRepository: IPaymentRepository) {}
+  constructor(private readonly paymentRepository: IPaymentRepository, private readonly orderWriterService: OrderWriterServicePort) { }
 
-  async create(payment: CreatePaymentDto): Promise<Payment> {
+  async create(payment: Payment, orderId: string): Promise<Payment> {
     try {
-      return await this.paymentRepository.create(payment);
+      const createdPayment = await this.paymentRepository.create(payment);
+      await this.orderWriterService.update({ id: orderId, status: StatusEnum.RECEIVED, paymentId: createdPayment.id, orderCode: null, clientId: null });
+
+      return createdPayment;
     } catch (error) {
       console.error(error);
       throw new InternalServerErrorException({

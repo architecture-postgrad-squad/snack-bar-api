@@ -5,17 +5,19 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ClientPostgresAdapter implements IClientRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
-  create(client: Client): Promise<Client> {
+  async create(client: Client): Promise<Client> {
     return this.prisma.client.create({
       data: {
-        ...client,
+        name: client.name,
+        email: client.email,
+        cpf: client.cpf,
       },
     }).then((client) => (this.toDomain(client)));
   }
 
-  update(client: Client): Promise<Client> {
+  async update(client: Client): Promise<Client> {
     return this.prisma.client.update({
       where: { id: client.id },
       data: {
@@ -24,7 +26,7 @@ export class ClientPostgresAdapter implements IClientRepository {
     }).then((client) => (this.toDomain(client)));
   }
 
-  findById(id: string): Promise<Client> {
+  async findById(id: string): Promise<Client> {
     return this.prisma.client.findUnique({
       where: {
         id: id,
@@ -32,7 +34,7 @@ export class ClientPostgresAdapter implements IClientRepository {
     }).then((client) => (this.toDomain(client)));
   }
 
-  findByCpf(cpf: string): Promise<Client> {
+  async findByCpf(cpf: string): Promise<Client> {
     return this.prisma.client.findUniqueOrThrow({
       where: {
         cpf: cpf,
@@ -40,7 +42,7 @@ export class ClientPostgresAdapter implements IClientRepository {
     }).then((client) => (this.toDomain(client)));
   }
 
-  findAll(): Promise<Client[]> {
+  async findAll(): Promise<Client[]> {
     return this.prisma.client.findMany().then((clients) => (clients.map((client) => (this.toDomain(client)))));
   }
 
