@@ -1,7 +1,7 @@
-import { Client } from "../client/client.entity";
-import { Payment } from "../payment/payment.entity";
-import { Product } from "../product/product.entity";
-import { StatusEnum } from "./status.entity";
+import { Client } from "@/core/domain/client/client.entity";
+import { StatusEnum } from "@/core/domain/order/status.entity";
+import { Payment } from "@/core/domain/payment/payment.entity";
+import { Product } from "@/core/domain/product/product.entity";
 
 export class OrderProduct {
     readonly id: string;

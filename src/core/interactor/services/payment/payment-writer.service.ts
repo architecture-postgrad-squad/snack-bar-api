@@ -1,9 +1,9 @@
 import { InternalServerErrorException } from '@/config/exceptions/custom-exceptions/internal-server-error.exception';
+import { StatusEnum } from '@/core/domain/order/status.entity';
 import { Payment } from '@/core/domain/payment/payment.entity';
+import { OrderWriterServicePort } from '@/core/interactor/port/order/order-writer-service.port';
 import { PaymentWriterServicePort } from '@/core/interactor/port/payment/payment-writer-service.port';
 import { IPaymentRepository } from '@/core/repository/payment/payment.repository';
-import { OrderWriterServicePort } from '../../port/order/order-writer-service.port';
-import { StatusEnum } from '@/core/domain/order/status.entity';
 
 export class PaymentWriterService implements PaymentWriterServicePort {
   constructor(private readonly paymentRepository: IPaymentRepository, private readonly orderWriterService: OrderWriterServicePort) { }

@@ -1,4 +1,4 @@
-import { Order } from "@/core/domain/order/order.entity";
+import { PrismaService } from "@/config/prisma.config";
 import { OrderReaderServicePort } from "@/core/interactor/port/order/order-reader-service.port";
 import { OrderWriterServicePort } from "@/core/interactor/port/order/order-writer-service.port";
 import { OrderReaderService } from "@/core/interactor/services/order/order-reader.service";
@@ -7,7 +7,6 @@ import { IOrderRepository } from "@/core/repository/order/order.respository";
 import { OrderPostgresAdapter } from "@/datasource/adapter/order/order-postgres.adapter";
 import { OrderController } from "@/transport/controller/order.controller";
 import { Module } from "@nestjs/common";
-import { PrismaService } from "../prisma.config";
 
 
 @Module({

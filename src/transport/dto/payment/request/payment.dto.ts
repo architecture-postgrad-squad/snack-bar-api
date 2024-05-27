@@ -1,7 +1,8 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 import { Payment } from '@/core/domain/payment/payment.entity';
 import { ORDER } from '@/transport/constant/order.constant';
 import { PAYMENT } from '@/transport/constant/payment.constant';
-import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 const { VALUE, METHOD } = PAYMENT.API_PROPERTY.PAYMENT;

@@ -1,7 +1,8 @@
-import { StatusEnum } from "@/core/domain/order/status.entity";
-import { ORDER } from "@/transport/constant/order.constant";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum } from "class-validator";
+
+import { StatusEnum } from "@/core/domain/order/status.entity";
+import { ORDER } from "@/transport/constant/order.constant";
 
 const { STATUS } = ORDER.API_PROPERTY.ORDER;
 

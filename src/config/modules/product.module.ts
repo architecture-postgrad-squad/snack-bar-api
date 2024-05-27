@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common';
-import { PrismaService } from '../prisma.config';
-import { ProductController } from '@/transport/controller/product.controller';
+import { PrismaService } from '@/config/prisma.config';
+import { ProductReaderServicePort } from '@/core/interactor/port/product/product-reader-service.port';
 import { ProductWriterServicePort } from '@/core/interactor/port/product/product-writer-service.port';
+import { ProductReaderService } from '@/core/interactor/services/product/product-reader.service';
 import { ProductWriterService } from '@/core/interactor/services/product/product-writer.service';
 import { IProductRepository } from '@/core/repository/product/product.repository';
-import { ProductReaderServicePort } from '@/core/interactor/port/product/product-reader-service.port';
-import { ProductReaderService } from '@/core/interactor/services/product/product-reader.service';
 import { ProductPostgresAdapter } from '@/datasource/adapter/product/product-postgres.adapter';
+import { ProductController } from '@/transport/controller/product.controller';
+import { Module } from '@nestjs/common';
 
 @Module({
   imports: [],

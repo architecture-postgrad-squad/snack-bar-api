@@ -1,4 +1,4 @@
-import { StatusEnum } from "./status.entity";
+import { StatusEnum } from "@/core/domain/order/status.entity";
 
 export class Order {
     readonly id: string;
