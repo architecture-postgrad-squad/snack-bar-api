@@ -29,14 +29,14 @@ model Product {
 
 model Order {
     id           String         @id @default(uuid())
-    clientId     String         @db.VarChar(255)
+    clientId     String?         @db.VarChar(255)
     paymentId    String?        @unique @db.VarChar(255)
-    commands     String         @db.VarChar(255)
-    status       String         @db.VarChar(255)
+    orderCode    Int            @db.Integer @default(autoincrement())
+    status       String         @db.VarChar(255) @default("Aguardando Pagamento")
     createdAt    DateTime       @default(now())
-    client       Client         @relation(fields: [clientId], references: [id])
+    client       Client?         @relation(fields: [clientId], references: [id])
     payment      Payment?       @relation(fields: [paymentId], references: [id])
-    orderProduct OrderProduct[]
+    products     OrderProduct[]
 }
 
 model Payment {

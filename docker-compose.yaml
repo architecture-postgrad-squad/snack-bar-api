@@ -29,5 +29,5 @@ services:
     depends_on:
       - db
     command: >
-      sh -c "npx prisma migrate deploy &&
-             npm run start:dev"
+      sh -c "npx prisma generate && npx prisma migrate deploy &&
+             npm run start"
