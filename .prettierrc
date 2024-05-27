@@ -1,4 +1,10 @@
 {
+  "plugins": ["prettier-plugin-organize-imports"],
   "singleQuote": true,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "printWidth": 90
 }
