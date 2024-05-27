@@ -2,7 +2,7 @@ import { Product } from '@/core/domain/product/product.entity';
 import { CategoryEnum } from '@/core/enum/product/category.enum';
 import { PRODUCT } from '@/transport/constant/product.constant';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 const { NAME, CATEGORY, PRICE, DESCRIPTION, IMAGES } = PRODUCT;
 
@@ -17,7 +17,7 @@ export class CreateProductRequestDto {
   })
   name: string;
 
-  @IsString()
+  @IsEnum(['BURGUER', 'SIDE_DISH', 'DESSERT', 'DRINK'])
   @IsNotEmpty()
   @ApiProperty({
     type: String,
@@ -25,7 +25,7 @@ export class CreateProductRequestDto {
     example: CATEGORY.EXAMPLE,
     required: true,
   })
-  category: string;
+  category: CategoryEnum;
 
   @IsNumber()
   @IsNotEmpty()

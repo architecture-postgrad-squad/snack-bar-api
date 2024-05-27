@@ -27,7 +27,7 @@ export const PRODUCT = {
   },
   CATEGORY: {
     DESC: 'Category in which the product is registered',
-    EXAMPLE: 'sandwich',
+    EXAMPLE: 'BURGUER',
   },
   PRICE: {
     DESC: 'Product price',

@@ -3,5 +3,11 @@ export class Payment {
   readonly value: number;
   readonly method: string;
   readonly createdAt: Date;
-  // TODO add order
+
+  constructor(id: string, value: number, method: string, createdAt?: Date) {
+    this.id = id;
+    this.value = value;
+    this.method = method;
+    this.createdAt = createdAt;
+  }
 }

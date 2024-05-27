@@ -8,7 +8,7 @@ import { Injectable } from '@nestjs/common';
 export class ProductPostgresAdapter implements IProductRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-    findByCategory(category: CategoryEnum): Promise<Product[]> {
+    async findByCategory(category: CategoryEnum): Promise<Product[]> {
         return this.prisma.product.findMany({
             where: {
               category: CategoryEnum[category],
@@ -16,16 +16,17 @@ export class ProductPostgresAdapter implements IProductRepository {
           }).then((products) => (products.map((product) => (this.toDomain(product)))));
     }
 
-    create(product: Product): Promise<Product> {
+    async create(product: Product): Promise<Product> {
         return this.prisma.product.create({
         data: {
             ...product,
-            images: product.images && JSON.parse(JSON.stringify(product.images))
+            images: product.images && JSON.parse(JSON.stringify(product.images)),
+            category: CategoryEnum[product.category],	
         },
         }).then((productPO) => (this.toDomain(productPO)));
     }
 
-    findById(id: string): Promise<Product> {
+    async findById(id: string): Promise<Product> {
         return this.prisma.product.findUnique({
         where: {
             id: id,
@@ -33,7 +34,7 @@ export class ProductPostgresAdapter implements IProductRepository {
         }).then((productPO) => (this.toDomain(productPO)));
     }
 
-    findAll(): Promise<Product[]> {
+    async findAll(): Promise<Product[]> {
         return this.prisma.product.findMany().then((products) => (products.map((product) => (this.toDomain(product)))));
     }
 

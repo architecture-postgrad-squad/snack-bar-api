@@ -1,8 +1,8 @@
 export const PAYMENT = {
   API_PROPERTY: {
     CREATE: {
-      SUMMARY: 'Creates a payment register',
-      DESC: 'Creates a payment register attached to an order in database',
+      SUMMARY: 'Creates a checkout payment register',
+      DESC: 'Creates a checkout payment register attached to an order in database',
     },
     PAYMENT: {
       ID: {
