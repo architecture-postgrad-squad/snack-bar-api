@@ -1,5 +1,5 @@
+import { NotFoundException } from "@/config/exceptions/custom-exceptions/not-found.exception";
 import { IOrderRepository } from "@/core/repository/order/order.respository";
-import { NotFoundException } from "@nestjs/common";
 
 export class OrderReaderService {
     constructor(private readonly orderRepository: IOrderRepository) {
