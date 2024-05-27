@@ -19,8 +19,10 @@ Event Storming no Miro: https://miro.com/app/board/uXjVKUrPAdA=/?share_link_id=2
 
 ```bash
 $ cd ${PROJECT_DIRECTORY}
-$ docker-compose up
+$ docker-compose --env-file ./env/local.env up
 ```
+
+Para acessar o swagger: http://localhost:3000/api
 
 ## Como rodar os testes localmente
 
