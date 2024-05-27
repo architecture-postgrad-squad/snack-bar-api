@@ -5,7 +5,7 @@
 - Débora Silveira - RM353919
 - Eduardo Petri - RM353438
 - Fernanda - RM 353224
-- Miriéle Silvério - 353515
+- Miriéle Silvério - RM 353515
 
 ### O que é o projeto?
 
