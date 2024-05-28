@@ -2,7 +2,7 @@ export const PRODUCT = {
   API_PROPERTY: {
     CREATE: {
       SUMMARY: 'Creates a product register',
-      DESC: 'Creates a product register in database',
+      DESC: 'Creates a product register in database (Categories: (BURGUER | SIDE_DISH | DESSERT | DRINK))',
     },
     GET_ALL: {
       SUMMARY: 'Gets all registered products in database',
