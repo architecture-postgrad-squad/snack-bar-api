@@ -14,7 +14,7 @@ export const PRODUCT = {
     },
     GET_BY_CATEGORY: {
       SUMMARY: 'Gets products by category',
-      DESC: 'Fetches all product by category',
+      DESC: 'Fetches all product by category (BURGUER | SIDE_DISH | DESSERT | DRINK)',
     },
   },
   ID: {
