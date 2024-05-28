@@ -1,7 +1,7 @@
 import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { InternalServerErrorException } from '@/config/exceptions/custom-exceptions/internal-server-error.exception';
+import { InternalServerErrorException } from '@/core/exceptions/custom-exceptions/internal-server-error.exception';
 import { Payment } from '@/core/domain/payment/payment.entity';
 import { PaymentWriterServicePort } from '@/core/interactor/port/payment/payment-writer-service.port';
 import { API_RESPONSE } from '@/transport/constant/api-response.constant';

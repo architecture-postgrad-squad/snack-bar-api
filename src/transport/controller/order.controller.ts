@@ -1,9 +1,9 @@
 import { Body, Controller, Get, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { BadRequestException } from '@/config/exceptions/custom-exceptions/bad-request.exception';
-import { InternalServerErrorException } from '@/config/exceptions/custom-exceptions/internal-server-error.exception';
-import { NotFoundException } from '@/config/exceptions/custom-exceptions/not-found.exception';
+import { BadRequestException } from '@/core/exceptions/custom-exceptions/bad-request.exception';
+import { InternalServerErrorException } from '@/core/exceptions/custom-exceptions/internal-server-error.exception';
+import { NotFoundException } from '@/core/exceptions/custom-exceptions/not-found.exception';
 import { OrderProduct } from '@/core/domain/order/order-product.entity';
 import { Order } from '@/core/domain/order/order.entity';
 import { StatusEnum } from '@/core/domain/order/status.entity';

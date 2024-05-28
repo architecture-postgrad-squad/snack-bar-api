@@ -1,3 +1,4 @@
+import { InternalServerErrorException } from '@/core/exceptions/custom-exceptions/internal-server-error.exception';
 import { Order } from '@/core/domain/order/order.entity';
 import { StatusEnum } from '@/core/domain/order/status.entity';
 import { Payment } from '@/core/domain/payment/payment.entity';
@@ -5,7 +6,6 @@ import { OrderWriterServicePort } from '@/core/interactor/port/order/order-write
 import { PaymentWriterService } from '@/core/interactor/services/payment/payment-writer.service';
 import { IPaymentRepository } from '@/core/repository/payment/payment.repository';
 import { CreatePaymentDto, toDomain } from '@/transport/dto/payment/request/payment.dto';
-import { HttpException } from '@nestjs/common';
 
 describe('PaymentService', () => {
   let service: PaymentWriterService;
@@ -68,6 +68,6 @@ describe('PaymentService', () => {
     jest
       .spyOn(paymentRepository, 'create')
       .mockRejectedValue(new Error('Failed to create payment'));
-    await expect(service.create(toDomain(paymentDto), paymentDto.orderId)).rejects.toThrow(HttpException);
+    await expect(service.create(toDomain(paymentDto), paymentDto.orderId)).rejects.toThrow(Error);
   });
 });

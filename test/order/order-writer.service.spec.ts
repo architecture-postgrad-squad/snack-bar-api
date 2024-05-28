@@ -1,4 +1,4 @@
-import { NotFoundException } from "@/config/exceptions/custom-exceptions/not-found.exception";
+import { NotFoundException } from "@/core/exceptions/custom-exceptions/not-found.exception";
 import { StatusEnum } from "@/core/domain/order/status.entity";
 import { OrderWriterService } from "@/core/interactor/services/order/order-writer.service";
 import { IOrderRepository } from "@/core/repository/order/order.respository";

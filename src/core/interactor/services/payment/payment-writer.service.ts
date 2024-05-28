@@ -1,4 +1,4 @@
-import { InternalServerErrorException } from '@/config/exceptions/custom-exceptions/internal-server-error.exception';
+import { InternalServerErrorException } from '@/core/exceptions/custom-exceptions/internal-server-error.exception';
 import { StatusEnum } from '@/core/domain/order/status.entity';
 import { Payment } from '@/core/domain/payment/payment.entity';
 import { OrderWriterServicePort } from '@/core/interactor/port/order/order-writer-service.port';
@@ -15,7 +15,6 @@ export class PaymentWriterService implements PaymentWriterServicePort {
 
       return createdPayment;
     } catch (error) {
-      console.error(error);
       throw new InternalServerErrorException({
         description: 'Failed to create payment',
       });

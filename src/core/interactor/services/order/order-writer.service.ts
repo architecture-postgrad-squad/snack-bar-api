@@ -1,5 +1,5 @@
-import { InternalServerErrorException } from "@/config/exceptions/custom-exceptions/internal-server-error.exception";
-import { NotFoundException } from "@/config/exceptions/custom-exceptions/not-found.exception";
+import { InternalServerErrorException } from "@/core/exceptions/custom-exceptions/internal-server-error.exception";
+import { NotFoundException } from "@/core/exceptions/custom-exceptions/not-found.exception";
 import { Order } from "@/core/domain/order/order.entity";
 import { OrderWriterServicePort } from "@/core/interactor/port/order/order-writer-service.port";
 import { IOrderRepository } from "@/core/repository/order/order.respository";
