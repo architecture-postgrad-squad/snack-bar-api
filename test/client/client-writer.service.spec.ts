@@ -1,4 +1,4 @@
-import { BadRequestException } from '@/config/exceptions/custom-exceptions/bad-request.exception';
+import { BadRequestException } from '@/core/exceptions/custom-exceptions/bad-request.exception';
 import { ClientWriterService } from '@/core/interactor/services/client/client-writer.service';
 import { IClientRepository } from '@/core/repository/client/client.repository';
 import { toDomain } from '@/transport/dto/client/create-client.dto';

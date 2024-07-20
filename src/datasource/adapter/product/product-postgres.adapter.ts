@@ -11,7 +11,7 @@ export class ProductPostgresAdapter implements IProductRepository {
     async findByCategory(category: CategoryEnum): Promise<Product[]> {
         return this.prisma.product.findMany({
             where: {
-              category: CategoryEnum[category],
+              category,
             },
           }).then((products) => (products.map((product) => (this.toDomain(product)))));
     }

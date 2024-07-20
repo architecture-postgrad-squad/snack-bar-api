@@ -27,7 +27,7 @@ export class ClientPostgresAdapter implements IClientRepository {
   }
 
   async findById(id: string): Promise<Client> {
-    return this.prisma.client.findUnique({
+    return this.prisma.client.findUniqueOrThrow({
       where: {
         id: id,
       },

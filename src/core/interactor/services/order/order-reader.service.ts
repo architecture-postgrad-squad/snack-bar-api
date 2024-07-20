@@ -1,4 +1,4 @@
-import { NotFoundException } from "@/config/exceptions/custom-exceptions/not-found.exception";
+import { NotFoundException } from "@/core/exceptions/custom-exceptions/not-found.exception";
 import { IOrderRepository } from "@/core/repository/order/order.respository";
 
 export class OrderReaderService {

@@ -1,5 +1,5 @@
-import { BadRequestException } from '@/config/exceptions/custom-exceptions/bad-request.exception';
-import { NotFoundException } from '@/config/exceptions/custom-exceptions/not-found.exception';
+import { BadRequestException } from '@/core/exceptions/custom-exceptions/bad-request.exception';
+import { NotFoundException } from '@/core/exceptions/custom-exceptions/not-found.exception';
 import { Client } from '@/core/domain/client/client.entity';
 import { ClientWriterServicePort } from '@/core/interactor/port/client/client-writer-service.port';
 import { IClientRepository } from '@/core/repository/client/client.repository';

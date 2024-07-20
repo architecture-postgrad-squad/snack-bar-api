@@ -83,6 +83,6 @@ export class ProductController {
     type: () => ProductDto,
   })
   async findByCategory(@Param('categoryName') categoryName: string): Promise<ProductDto[]> {
-    return (await this.productReaderService.getByCategory(categoryName as CategoryEnum)).map((product) => (toDTO(product)));
+    return (await this.productReaderService.getByCategory(categoryName)).map((product) => (toDTO(product)));
   }
 }

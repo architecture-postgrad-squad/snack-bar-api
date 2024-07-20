@@ -40,15 +40,15 @@ describe('ProductReaderService', () => {
     it('should return a products registered in requested category', async () => {
       (productRepository.findByCategory as jest.Mock).mockResolvedValue(productListMock);
 
-      expect(await service.getByCategory(CategoryEnum['Lanche'])).toBe(productListMock);
+      expect(await service.getByCategory("BURGUER")).toBe(productListMock);
       expect(productRepository.findByCategory).toHaveBeenCalledWith(
-        CategoryEnum['Lanche'],
+        "Lanche",
       );
     });
 
     it('should return empty array if there is no product for requested category', async () => {
       (productRepository.findByCategory as jest.Mock).mockResolvedValue([]);
-      const products = await service.getByCategory(CategoryEnum['Lanche']);
+      const products = await service.getByCategory("BURGUER");
       expect(products).toEqual([]);
     });
   });
