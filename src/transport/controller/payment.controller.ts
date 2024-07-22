@@ -24,24 +24,27 @@ export class PaymentController {
   constructor(
     private readonly paymentWriterService: PaymentWriterServicePort,
     private readonly paymentReaderService: PaymentReaderServicePort,
-  ) {}
+  ) { }
 
   @Post()
   @ApiOperation({ summary: CREATE.SUMMARY, description: CREATE.DESC })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: CREATED_DESC,
+    type: () => Payment,
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: INTERNAL_SERVER_EXCEPTION_DESC,
     type: () => InternalServerErrorException,
   })
-  async create(@Body() createPaymentDto: CreatePaymentDto): Promise<Payment> {
-    return this.paymentWriterService.create(
+  async create(@Body() createPaymentDto: CreatePaymentDto) {
+    const payment = await this.paymentWriterService.create(
       toDomain(createPaymentDto),
       createPaymentDto.orderId,
     );
+
+    return { id: payment.id };
   }
 
   @Get(':id')
