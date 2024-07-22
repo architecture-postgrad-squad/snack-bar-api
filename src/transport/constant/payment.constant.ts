@@ -4,6 +4,10 @@ export const PAYMENT = {
       SUMMARY: 'Creates a checkout payment register',
       DESC: 'Creates a checkout payment register attached to an order in database',
     },
+    GET_BY_ID: {
+      SUMMARY: 'Gets payment status by identifier',
+      DESC: 'Fetches payment status from database register by identifier',
+    },
     PAYMENT: {
       ID: {
         DESC: 'Payment identifier in database',
@@ -16,6 +20,10 @@ export const PAYMENT = {
       METHOD: {
         DESC: 'Category in which the payment is registered',
         EXAMPLE: 'Credit Card',
+      },
+      STATUS: {
+        DESC: 'Status in which the payment is',
+        EXAMPLE: 'APROVADO',
       },
     },
   },

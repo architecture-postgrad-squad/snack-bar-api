@@ -15,4 +15,12 @@ export class PaymentPostgresAdapter implements IPaymentRepository {
       },
     });
   }
+
+  async findById(id: string): Promise<Payment> {
+    return await this.prisma.payment.findUniqueOrThrow({
+      where: {
+        id,
+      },
+    });
+  }
 }

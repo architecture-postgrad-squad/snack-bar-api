@@ -1,4 +1,3 @@
-import { InternalServerErrorException } from '@/core/exceptions/custom-exceptions/internal-server-error.exception';
 import { Order } from '@/core/domain/order/order.entity';
 import { StatusEnum } from '@/core/domain/order/status.entity';
 import { Payment } from '@/core/domain/payment/payment.entity';
@@ -17,12 +16,20 @@ describe('PaymentService', () => {
       create: jest.fn((payment) =>
         Promise.resolve({ ...payment, id: 'some-id', createdAt: new Date() }),
       ),
+      findById: jest.fn(),
     };
 
     orderWriterService = {
       create: jest.fn((order) => Promise.resolve({ ...order, id: '1' })),
       update: jest.fn((order) =>
-        Promise.resolve({ id: order.id, status: order.status, orderCode: 1, clientId: '1', paymentId: 'some-id', createdAt: new Date() }),
+        Promise.resolve({
+          id: order.id,
+          status: order.status,
+          orderCode: 1,
+          clientId: '1',
+          paymentId: 'some-id',
+          createdAt: new Date(),
+        }),
       ),
     };
 
@@ -33,7 +40,7 @@ describe('PaymentService', () => {
     const paymentDto: CreatePaymentDto = {
       value: 100,
       method: 'Credit Card',
-      orderId: '1'
+      orderId: '1',
     };
 
     const expectedPayment: Payment = {
@@ -47,8 +54,8 @@ describe('PaymentService', () => {
       status: StatusEnum.RECEIVED,
       orderCode: 1,
       clientId: '1',
-      paymentId: expectedPayment.id
-    }
+      paymentId: expectedPayment.id,
+    };
 
     jest.spyOn(paymentRepository, 'create').mockResolvedValue(expectedPayment);
     jest.spyOn(orderWriterService, 'update').mockResolvedValue(expectedOrder);
@@ -62,12 +69,14 @@ describe('PaymentService', () => {
     const paymentDto: CreatePaymentDto = {
       value: 100,
       method: 'Credit Card',
-      orderId: '1'
+      orderId: '1',
     };
 
     jest
       .spyOn(paymentRepository, 'create')
       .mockRejectedValue(new Error('Failed to create payment'));
-    await expect(service.create(toDomain(paymentDto), paymentDto.orderId)).rejects.toThrow(Error);
+    await expect(
+      service.create(toDomain(paymentDto), paymentDto.orderId),
+    ).rejects.toThrow(Error);
   });
 });

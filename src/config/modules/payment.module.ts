@@ -1,7 +1,9 @@
 import { PrismaService } from '@/config/prisma.config';
 import { OrderWriterServicePort } from '@/core/interactor/port/order/order-writer-service.port';
+import { PaymentReaderServicePort } from '@/core/interactor/port/payment/payment-reader-service.port';
 import { PaymentWriterServicePort } from '@/core/interactor/port/payment/payment-writer-service.port';
 import { OrderWriterService } from '@/core/interactor/services/order/order-writer.service';
+import { PaymentReaderService } from '@/core/interactor/services/payment/payment-reader.service';
 import { PaymentWriterService } from '@/core/interactor/services/payment/payment-writer.service';
 import { IOrderRepository } from '@/core/repository/order/order.respository';
 import { IPaymentRepository } from '@/core/repository/payment/payment.repository';
@@ -17,8 +19,18 @@ import { Module } from '@nestjs/common';
     PrismaService,
     {
       provide: PaymentWriterServicePort,
-      useFactory: (paymentRepository: IPaymentRepository, orderWriterService: OrderWriterServicePort) => {
+      useFactory: (
+        paymentRepository: IPaymentRepository,
+        orderWriterService: OrderWriterServicePort,
+      ) => {
         return new PaymentWriterService(paymentRepository, orderWriterService);
+      },
+      inject: [IPaymentRepository, OrderWriterServicePort],
+    },
+    {
+      provide: PaymentReaderServicePort,
+      useFactory: (paymentRepository: IPaymentRepository) => {
+        return new PaymentReaderService(paymentRepository);
       },
       inject: [IPaymentRepository, OrderWriterServicePort],
     },
@@ -39,4 +51,4 @@ import { Module } from '@nestjs/common';
     },
   ],
 })
-export class PaymentModule { }
+export class PaymentModule {}
