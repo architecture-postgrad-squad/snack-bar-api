@@ -1,31 +1,29 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpStatus,
-  Param,
-  Post,
-} from '@nestjs/common';
-
-import { CategoryEnum } from '@/core/enum/product/category.enum';
-import { ProductReaderServicePort } from '@/core/interactor/port/product/product-reader-service.port';
-import { ProductWriterServicePort } from '@/core/interactor/port/product/product-writer-service.port';
-import { API_RESPONSE } from '@/transport/constant/api-response.constant';
-import { PRODUCT } from '@/transport/constant/product.constant';
-import { CreateProductRequestDto, toDomain } from '@/transport/dto/product/create-product.dto';
-import { ProductDto, toDTO } from '@/transport/dto/product/product.dto';
+import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-const { CREATED_DESC, OK_DESC } =
-  API_RESPONSE;
+import { CreateProductUseCasesPort } from '@/core/interactor/port/product/create-product-use-cases.port';
+import { FindAllProductsUseCasesPort } from '@/core/interactor/port/product/find-all-products-use-cases.port';
+import { FindProductByIdUseCasesPort } from '@/core/interactor/port/product/find-product-by-id-use-cases.port';
+import { FindProductsByCategoryUseCasesPort } from '@/core/interactor/port/product/find-products-by-category-use-cases.port';
+import { API_RESPONSE } from '@/transport/constant/api-response.constant';
+import { PRODUCT } from '@/transport/constant/product.constant';
+import {
+  CreateProductRequestDto,
+  toDomain,
+} from '@/transport/dto/product/create-product.dto';
+import { ProductDto, toDTO } from '@/transport/dto/product/product.dto';
+
+const { CREATED_DESC, OK_DESC } = API_RESPONSE;
 const { CREATE, GET_ALL, GET_BY_ID, GET_BY_CATEGORY } = PRODUCT.API_PROPERTY;
 
 @Controller('products')
 @ApiTags('Products')
 export class ProductController {
   constructor(
-    private readonly productReaderService: ProductReaderServicePort,
-    private readonly productWriterService: ProductWriterServicePort,
+    private readonly createProductUseCases: CreateProductUseCasesPort,
+    private readonly findAllProductsUseCases: FindAllProductsUseCasesPort,
+    private readonly findProductByIdUseCases: FindProductByIdUseCasesPort,
+    private readonly findProductsByCategoryUseCases: FindProductsByCategoryUseCasesPort,
   ) {}
 
   @Post('/')
@@ -38,10 +36,8 @@ export class ProductController {
     description: CREATED_DESC,
     type: () => ProductDto,
   })
-  async create(
-    @Body() productBody: CreateProductRequestDto,
-  ): Promise<ProductDto> {
-    return toDTO(await this.productWriterService.create(toDomain(productBody)));
+  async create(@Body() productBody: CreateProductRequestDto): Promise<ProductDto> {
+    return toDTO(await this.createProductUseCases.execute(toDomain(productBody)));
   }
 
   @Get('/')
@@ -55,7 +51,7 @@ export class ProductController {
     type: () => ProductDto,
   })
   async findAll(): Promise<ProductDto[]> {
-    return (await this.productReaderService.getAll()).map((product) => (toDTO(product)));
+    return (await this.findAllProductsUseCases.execute()).map((product) => toDTO(product));
   }
 
   @Get('/:id')
@@ -69,7 +65,7 @@ export class ProductController {
     type: () => ProductDto,
   })
   async findById(@Param('id') id: string): Promise<ProductDto> {
-    return toDTO(await this.productReaderService.getById(id));
+    return toDTO(await this.findProductByIdUseCases.execute(id));
   }
 
   @Get('category/:categoryName')
@@ -82,7 +78,11 @@ export class ProductController {
     description: OK_DESC,
     type: () => ProductDto,
   })
-  async findByCategory(@Param('categoryName') categoryName: string): Promise<ProductDto[]> {
-    return (await this.productReaderService.getByCategory(categoryName)).map((product) => (toDTO(product)));
+  async findByCategory(
+    @Param('categoryName') categoryName: string,
+  ): Promise<ProductDto[]> {
+    return (await this.findProductsByCategoryUseCases.execute(categoryName)).map((product) =>
+      toDTO(product),
+    );
   }
 }

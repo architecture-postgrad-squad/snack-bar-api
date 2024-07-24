@@ -25,10 +25,5 @@ export class CreateClientDto {
 }
 
 export const toDomain = (dto: CreateClientDto): Client => {
-  return new Client(
-    null,
-    dto.name,
-    dto.email,
-    dto.cpf
-  )
-}
+  return new Client(null, dto.name, dto.email, dto.cpf);
+};
