@@ -1,5 +1,8 @@
 export class NotFoundException extends Error {
-  constructor(message?: {description: string}, private statusCode = 404) {
+  constructor(
+    message?: { description: string },
+    private statusCode = 404,
+  ) {
     super(message.description);
     this.statusCode = statusCode;
     this.name = 'NotFoundException';
@@ -13,4 +16,3 @@ export class NotFoundException extends Error {
     return this.statusCode;
   }
 }
-

@@ -6,7 +6,6 @@ import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 const { CPF, NAME, EMAIL } = CLIENT.API_PROPERTY.CLIENT;
 
 export class UpdateClientDto {
-
   @IsOptional()
   @IsString()
   @MinLength(11)
@@ -26,10 +25,5 @@ export class UpdateClientDto {
 }
 
 export const toDomain = (dto: UpdateClientDto, id: string): Client => {
-  return new Client(
-    id,
-    dto.name,
-    dto.email,
-    dto.cpf
-  )
-}
+  return new Client(id, dto.name, dto.email, dto.cpf);
+};
