@@ -1,6 +1,7 @@
 import { PrismaService } from '@/config/prisma.config';
 import { OrderProduct } from '@/core/domain/order/order-product.entity';
 import { Order } from '@/core/domain/order/order.entity';
+import { StatusEnum } from '@/core/domain/order/status.entity';
 
 import { IOrderRepository } from '@/core/repository/order/order.respository';
 import { Injectable } from '@nestjs/common';
@@ -73,27 +74,44 @@ export class OrderPostgresAdapter implements IOrderRepository {
     return orders as OrderProduct;
   }
 
-  async findAllOrderPrduct(): Promise<OrderProduct[]> {
-    const orders = await this.prisma.order
-      .findMany({
-        select: {
-          id: true,
-          client: true,
-          payment: true,
-          orderCode: true,
-          status: true,
-          products: {
-            select: {
-              product: true,
-            },
+  async findAllOrderProduct(): Promise<OrderProduct[]> {
+    const orders = await this.prisma.order.findMany({
+      where: {
+        status: {
+          in: [StatusEnum.DONE, StatusEnum.IN_PROGRESS, StatusEnum.RECEIVED],
+        },
+      },
+      select: {
+        id: true,
+        client: true,
+        payment: true,
+        orderCode: true,
+        status: true,
+        createdAt: true,
+        products: {
+          select: {
+            product: true,
           },
         },
-      })
-      .then((orders) => {
-        return orders.map((order) => {
-          return { ...order, products: order.products.map((product) => product.product) };
-        });
-      });
-    return orders as unknown as OrderProduct[];
+      },
+    });
+
+    const sortOrder = [StatusEnum.DONE, StatusEnum.IN_PROGRESS, StatusEnum.RECEIVED];
+
+    const sortedOrders = orders.sort((a, b) => {
+      const aStatusIndex = sortOrder.indexOf(a.status as StatusEnum);
+      const bStatusIndex = sortOrder.indexOf(b.status as StatusEnum);
+      if (aStatusIndex !== bStatusIndex) {
+        return aStatusIndex - bStatusIndex;
+      }
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    });
+
+    const result = sortedOrders.map((order) => ({
+      ...order,
+      products: order.products.map((product) => product.product),
+    }));
+
+    return result as unknown as OrderProduct[];
   }
 }

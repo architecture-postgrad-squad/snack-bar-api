@@ -4,8 +4,10 @@ import { BadRequestException } from '@/core/exceptions/custom-exceptions/bad-req
 import { FindProductsByCategoryUseCasesPort } from '@/core/interactor/port/product/find-products-by-category-use-cases.port';
 import { IProductRepository } from '@/core/repository/product/product.repository';
 
-export class FindProductsByCategoryUseCases implements FindProductsByCategoryUseCasesPort {
-  constructor(private readonly productRepository: IProductRepository) { }
+export class FindProductsByCategoryUseCases
+  implements FindProductsByCategoryUseCasesPort
+{
+  constructor(private readonly productRepository: IProductRepository) {}
 
   execute(category: string): Promise<Product[]> {
     if (!CategoryEnum[category]) {
@@ -13,5 +15,4 @@ export class FindProductsByCategoryUseCases implements FindProductsByCategoryUse
     }
     return this.productRepository.findByCategory(CategoryEnum[category]);
   }
-
 }

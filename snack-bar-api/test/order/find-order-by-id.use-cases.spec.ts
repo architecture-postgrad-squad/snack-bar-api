@@ -42,7 +42,7 @@ describe('FindOrderByIdUseCases', () => {
       update: jest.fn(),
       findOrderById: jest.fn(),
       findOrderProductById: jest.fn(),
-      findAllOrderPrduct: jest.fn(),
+      findAllOrderProduct: jest.fn(),
     };
 
     useCase = new FindOrderByIdUseCases(orderRepository);

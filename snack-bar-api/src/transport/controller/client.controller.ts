@@ -18,7 +18,6 @@ import {
   toDomain as updateToDomain,
 } from '@/transport/dto/client/update-client.dto';
 
-
 const { CREATE, GET_ALL, GET_BY_ID, GET_BY_CPF, UPDATE } = CLIENT.API_PROPERTY;
 const {
   OK_DESC,
