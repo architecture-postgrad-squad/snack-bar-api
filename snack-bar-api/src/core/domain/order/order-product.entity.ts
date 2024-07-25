@@ -10,4 +10,5 @@ export class OrderProduct {
   readonly orderCode: number;
   readonly status: StatusEnum;
   readonly products: Product[];
+  readonly createdAt: Date;
 }
