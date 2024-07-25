@@ -14,6 +14,7 @@ describe('FindOrderByIdUseCases', () => {
     paymentId: '1',
     orderCode: 1,
     status: StatusEnum.IN_PROGRESS,
+    createdAt: new Date('2023-07-01T09:00:00Z'),
     products: [
       {
         id: '1',

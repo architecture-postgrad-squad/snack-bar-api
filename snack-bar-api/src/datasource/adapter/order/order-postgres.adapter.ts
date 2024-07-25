@@ -57,6 +57,7 @@ export class OrderPostgresAdapter implements IOrderRepository {
           payment: true,
           orderCode: true,
           status: true,
+          createdAt: true,
           products: {
             select: {
               product: true,
@@ -75,43 +76,32 @@ export class OrderPostgresAdapter implements IOrderRepository {
   }
 
   async findAllOrderProduct(): Promise<OrderProduct[]> {
-    const orders = await this.prisma.order.findMany({
-      where: {
-        status: {
-          in: [StatusEnum.DONE, StatusEnum.IN_PROGRESS, StatusEnum.RECEIVED],
-        },
-      },
-      select: {
-        id: true,
-        client: true,
-        payment: true,
-        orderCode: true,
-        status: true,
-        createdAt: true,
-        products: {
-          select: {
-            product: true,
+    const orders = await this.prisma.order
+      .findMany({
+        where: {
+          status: {
+            in: [StatusEnum.DONE, StatusEnum.IN_PROGRESS, StatusEnum.RECEIVED],
           },
         },
-      },
-    });
-
-    const sortOrder = [StatusEnum.DONE, StatusEnum.IN_PROGRESS, StatusEnum.RECEIVED];
-
-    const sortedOrders = orders.sort((a, b) => {
-      const aStatusIndex = sortOrder.indexOf(a.status as StatusEnum);
-      const bStatusIndex = sortOrder.indexOf(b.status as StatusEnum);
-      if (aStatusIndex !== bStatusIndex) {
-        return aStatusIndex - bStatusIndex;
-      }
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    });
-
-    const result = sortedOrders.map((order) => ({
-      ...order,
-      products: order.products.map((product) => product.product),
-    }));
-
-    return result as unknown as OrderProduct[];
+        select: {
+          id: true,
+          client: true,
+          payment: true,
+          orderCode: true,
+          status: true,
+          createdAt: true,
+          products: {
+            select: {
+              product: true,
+            },
+          },
+        },
+      })
+      .then((orders) => {
+        return orders.map((order) => {
+          return { ...order, products: order.products.map((product) => product.product) };
+        });
+      });
+    return orders as unknown as OrderProduct[];
   }
 }
