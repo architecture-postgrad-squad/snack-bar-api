@@ -5,6 +5,6 @@ export class FindAllOrdersUseCases implements FindAllOrdersUseCasesPort {
   constructor(private readonly orderRepository: IOrderRepository) {}
 
   async execute() {
-    return await this.orderRepository.findAllOrderPrduct();
+    return await this.orderRepository.findAllOrderProduct();
   }
 }

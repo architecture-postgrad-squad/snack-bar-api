@@ -7,5 +7,5 @@ export abstract class IOrderRepository {
   abstract findOrderById(id: string): Promise<Order>;
 
   abstract findOrderProductById(id: string): Promise<OrderProduct>;
-  abstract findAllOrderPrduct(): Promise<OrderProduct[]>;
+  abstract findAllOrderProduct(): Promise<OrderProduct[]>;
 }

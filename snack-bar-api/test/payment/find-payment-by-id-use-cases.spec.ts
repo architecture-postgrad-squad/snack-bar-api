@@ -8,7 +8,9 @@ describe('FindPaymentByIdUseCases', () => {
     create: jest.fn(),
     findById: jest.fn(),
   };
-  const useCase: FindPaymentByIdUseCasesPort = new FindPaymentByIdUseCases(paymentRepository);
+  const useCase: FindPaymentByIdUseCasesPort = new FindPaymentByIdUseCases(
+    paymentRepository,
+  );
 
   const paymentMock = {
     id: '1',
@@ -30,10 +32,7 @@ describe('FindPaymentByIdUseCases', () => {
     try {
       return await useCase.execute('2');
     } catch (error) {
-      expect(error).toEqual(
-        new NotFoundException({ description: 'Payment not found' }),
-      );
+      expect(error).toEqual(new NotFoundException({ description: 'Payment not found' }));
     }
   });
-
 });

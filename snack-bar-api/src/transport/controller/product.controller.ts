@@ -51,7 +51,9 @@ export class ProductController {
     type: () => ProductDto,
   })
   async findAll(): Promise<ProductDto[]> {
-    return (await this.findAllProductsUseCases.execute()).map((product) => toDTO(product));
+    return (await this.findAllProductsUseCases.execute()).map((product) =>
+      toDTO(product),
+    );
   }
 
   @Get('/:id')
@@ -81,8 +83,8 @@ export class ProductController {
   async findByCategory(
     @Param('categoryName') categoryName: string,
   ): Promise<ProductDto[]> {
-    return (await this.findProductsByCategoryUseCases.execute(categoryName)).map((product) =>
-      toDTO(product),
+    return (await this.findProductsByCategoryUseCases.execute(categoryName)).map(
+      (product) => toDTO(product),
     );
   }
 }

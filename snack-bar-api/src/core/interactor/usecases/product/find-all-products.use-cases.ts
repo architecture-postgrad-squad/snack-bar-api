@@ -8,5 +8,4 @@ export class FindAllProductsUseCases implements FindAllProductsUseCasesPort {
   async execute(): Promise<Product[]> {
     return await this.productRepository.findAll();
   }
-
 }
