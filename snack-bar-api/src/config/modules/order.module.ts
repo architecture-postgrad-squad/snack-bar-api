@@ -53,4 +53,4 @@ import { OrderController } from '@/transport/controller/order.controller';
   ],
   exports: [],
 })
-export class OrderModule { }
+export class OrderModule {}

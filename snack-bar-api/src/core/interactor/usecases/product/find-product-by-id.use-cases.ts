@@ -14,5 +14,4 @@ export class FindProductByIdUseCases implements FindProductByIdUseCasesPort {
       throw new NotFoundException({ description: 'Product not found' });
     }
   }
-
 }

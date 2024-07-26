@@ -1,6 +1,7 @@
 import { PrismaService } from '@/config/prisma.config';
 import { OrderProduct } from '@/core/domain/order/order-product.entity';
 import { Order } from '@/core/domain/order/order.entity';
+import { StatusEnum } from '@/core/domain/order/status.entity';
 
 import { IOrderRepository } from '@/core/repository/order/order.respository';
 import { Injectable } from '@nestjs/common';
@@ -56,6 +57,7 @@ export class OrderPostgresAdapter implements IOrderRepository {
           payment: true,
           orderCode: true,
           status: true,
+          createdAt: true,
           products: {
             select: {
               product: true,
@@ -73,15 +75,21 @@ export class OrderPostgresAdapter implements IOrderRepository {
     return orders as OrderProduct;
   }
 
-  async findAllOrderPrduct(): Promise<OrderProduct[]> {
+  async findAllOrderProduct(): Promise<OrderProduct[]> {
     const orders = await this.prisma.order
       .findMany({
+        where: {
+          status: {
+            in: [StatusEnum.DONE, StatusEnum.IN_PROGRESS, StatusEnum.RECEIVED],
+          },
+        },
         select: {
           id: true,
           client: true,
           payment: true,
           orderCode: true,
           status: true,
+          createdAt: true,
           products: {
             select: {
               product: true,
