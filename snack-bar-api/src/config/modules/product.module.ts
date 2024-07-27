@@ -4,7 +4,7 @@ import { ProductWriterServicePort } from '@/core/interactor/port/product/product
 import { ProductReaderService } from '@/core/interactor/services/product/product-reader.service';
 import { ProductWriterService } from '@/core/interactor/services/product/product-writer.service';
 import { IProductRepository } from '@/core/repository/product/product.repository';
-import { ProductPostgresAdapter } from '@/datasource/adapter/product/product-postgres.adapter';
+import { ProductPostgresAdapter } from '@/datasource/database/adapter/product/product-postgres.adapter';
 import { ProductController } from '@/transport/controller/product.controller';
 import { Module } from '@nestjs/common';
 

@@ -8,6 +8,10 @@ export const PAYMENT = {
       SUMMARY: 'Gets payment status by identifier',
       DESC: 'Fetches payment status from database register by identifier',
     },
+    UPDATE_BY_ID: {
+      SUMMARY: 'Updates payment register by identifier',
+      DESC: 'Fetches updated data from third party API and updates existing payment register by identifier',
+    },
     PAYMENT: {
       ID: {
         DESC: 'Payment identifier in database',
