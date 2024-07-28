@@ -1,5 +1,6 @@
-import { MercadoPagoPayerDto } from './nested/payer.dto';
-import { MercadoPagoTransactionDetailsDto } from './nested/transaction-details.dto';
+import { Payment } from '@/core/domain/payment/payment.entity';
+import { MercadoPagoPayerDto } from '@/datasource/mercado-pago/dto/nested/payer.dto';
+import { MercadoPagoTransactionDetailsDto } from '@/datasource/mercado-pago/dto/nested/transaction-details.dto';
 
 export class MercadoPagoPaymentDto {
   readonly id: string;
@@ -26,10 +27,8 @@ export class MercadoPagoPaymentDto {
   readonly car: Object;
 }
 
-/* export const toDomain = (dto: CreatePaymentDto): Payment => {
-  return new Payment(
-    null,
-    dto.value,
-    dto.method,
-  );
-}; */
+export const toDomain = (dto: MercadoPagoPaymentDto): Payment => {
+  return dto.status === 'approved'
+    ? new Payment(dto.id, dto.transaction_amount, 'PIX')
+    : null;
+};
