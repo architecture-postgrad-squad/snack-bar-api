@@ -3,34 +3,31 @@ import { InternalServerErrorException } from '@/core/exceptions/custom-exception
 import { UpdatePaymentServicePort } from '@/core/interactor/port/payment/update-payment-service.port';
 import { IPaymentRepository } from '@/core/repository/payment/payment.repository';
 import { MercadoPagoServicePort } from '@/datasource/mercado-pago/port/mercado-pago-service.port';
+import { UpdatePaymentResponseDto } from '@/transport/dto/payment/response/update-success-response.dto';
 
 export class UpdatePaymentUseCaseService implements UpdatePaymentServicePort {
   constructor(
     private readonly paymentRepository: IPaymentRepository,
-    private readonly mercadoPagoAdapter: MercadoPagoServicePort,
+    private readonly mercadoPagoAdapterService: MercadoPagoServicePort,
   ) {}
 
-  //TODO: implement unit tests
-  async execute(id: string): Promise<any> {
+  async execute(id: string): Promise<UpdatePaymentResponseDto> {
     const payment = await this.fetchPayment(id);
-    //TODO: Implement toDomain transformer for mercado pago datasource
-    // return this.updatePaymentRegister(payment;)
-    return;
+    return await this.updatePaymentRegister(payment);
   }
 
-  private async fetchPayment(id: string) {
+  private async fetchPayment(id: string): Promise<Payment> {
+    return await this.mercadoPagoAdapterService.getPaymentById(id);
+  }
+
+  private async updatePaymentRegister(
+    payment: Payment,
+  ): Promise<UpdatePaymentResponseDto> {
     try {
-      return await this.mercadoPagoAdapter.execute(id);
+      await this.paymentRepository.updateById(payment.id, payment);
     } catch (error) {
       throw new InternalServerErrorException();
     }
-  }
-
-  private async updatePaymentRegister(payment: Payment) {
-    try {
-      return await this.paymentRepository.updateById(payment.id, payment);
-    } catch (error) {
-      throw new InternalServerErrorException();
-    }
+    return { message: 'Payment register was updated successfully' };
   }
 }

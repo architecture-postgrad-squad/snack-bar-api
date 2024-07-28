@@ -1,5 +1,5 @@
-import { MercadoPagoPaymentDto } from '@/datasource/mercado-pago/dto/payment.dto';
+import { Payment } from '@/core/domain/payment/payment.entity';
 
 export abstract class MercadoPagoServicePort {
-  abstract execute(identifier: string): Promise<MercadoPagoPaymentDto>;
+  abstract getPaymentById(identifier: string): Promise<Payment>;
 }

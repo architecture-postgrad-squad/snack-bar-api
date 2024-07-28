@@ -14,6 +14,7 @@ import {
   GetPaymentStatusResponseDto,
   toDTO,
 } from '@/transport/dto/payment/response/get-payment-status.dto';
+import { UpdatePaymentResponseDto } from '@/transport/dto/payment/response/update-success-response.dto';
 
 const { CREATE, GET_BY_ID, UPDATE_BY_ID } = PAYMENT.API_PROPERTY;
 const { CREATED_DESC, OK_DESC, INTERNAL_SERVER_EXCEPTION_DESC, NOT_FOUND_DESC } =
@@ -75,18 +76,14 @@ export class PaymentController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: OK_DESC,
-  })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: NOT_FOUND_DESC,
-    type: () => NotFoundException,
+    type: () => UpdatePaymentResponseDto,
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: INTERNAL_SERVER_EXCEPTION_DESC,
     type: () => InternalServerErrorException,
   })
-  async updateById(@Param('id') id: string): Promise<any> {
+  async updateById(@Param('id') id: string): Promise<UpdatePaymentResponseDto> {
     return await this.updatePaymentUseCaseService.execute(id);
   }
 }
