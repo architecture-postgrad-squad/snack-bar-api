@@ -4,7 +4,11 @@ import { IPaymentRepository } from '@/core/repository/payment/payment.repository
 import { randomUUID } from 'crypto';
 
 describe('PaymentReaderService', () => {
-  let paymentRepository: IPaymentRepository = { create: jest.fn(), findById: jest.fn() };
+  let paymentRepository: IPaymentRepository = {
+    create: jest.fn(),
+    findById: jest.fn(),
+    updateById: jest.fn(),
+  };
   let service: PaymentReaderService = new PaymentReaderService(paymentRepository);
 
   const paymentMock = {
