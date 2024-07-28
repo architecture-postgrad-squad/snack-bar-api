@@ -1,12 +1,17 @@
+import { Module } from '@nestjs/common';
+
 import { PrismaService } from '@/config/prisma.config';
-import { OrderReaderServicePort } from '@/core/interactor/port/order/order-reader-service.port';
-import { OrderWriterServicePort } from '@/core/interactor/port/order/order-writer-service.port';
-import { OrderReaderService } from '@/core/interactor/services/order/order-reader.service';
-import { OrderWriterService } from '@/core/interactor/services/order/order-writer.service';
+import { CreateOrderUseCasesPort } from '@/core/interactor/port/order/create-order-use-cases.port';
+import { FindAllOrdersUseCasesPort } from '@/core/interactor/port/order/find-all-orders-use-cases.port';
+import { FindOrderByIdUseCasesPort } from '@/core/interactor/port/order/find-order-by-id-use-cases.port';
+import { UpdateOrderUseCasesPort } from '@/core/interactor/port/order/update-order-use-cases.port';
+import { CreateOrderUseCases } from '@/core/interactor/usecases/order/create-order.use-cases';
+import { FindAllOrdersUseCases } from '@/core/interactor/usecases/order/find-all-orders.use-cases';
+import { FindOrderByIdUseCases } from '@/core/interactor/usecases/order/find-order-by-id.use-cases';
+import { UpdateOrderUseCases } from '@/core/interactor/usecases/order/update-order.use-cases';
 import { IOrderRepository } from '@/core/repository/order/order.respository';
 import { OrderPostgresAdapter } from '@/datasource/database/adapter/order/order-postgres.adapter';
 import { OrderController } from '@/transport/controller/order.controller';
-import { Module } from '@nestjs/common';
 
 @Module({
   imports: [],
@@ -14,16 +19,30 @@ import { Module } from '@nestjs/common';
   providers: [
     PrismaService,
     {
-      provide: OrderWriterServicePort,
+      provide: CreateOrderUseCasesPort,
       useFactory: (orderRepository: IOrderRepository) => {
-        return new OrderWriterService(orderRepository);
+        return new CreateOrderUseCases(orderRepository);
       },
       inject: [IOrderRepository],
     },
     {
-      provide: OrderReaderServicePort,
+      provide: UpdateOrderUseCasesPort,
       useFactory: (orderRepository: IOrderRepository) => {
-        return new OrderReaderService(orderRepository);
+        return new UpdateOrderUseCases(orderRepository);
+      },
+      inject: [IOrderRepository],
+    },
+    {
+      provide: FindAllOrdersUseCasesPort,
+      useFactory: (orderRepository: IOrderRepository) => {
+        return new FindAllOrdersUseCases(orderRepository);
+      },
+      inject: [IOrderRepository],
+    },
+    {
+      provide: FindOrderByIdUseCasesPort,
+      useFactory: (orderRepository: IOrderRepository) => {
+        return new FindOrderByIdUseCases(orderRepository);
       },
       inject: [IOrderRepository],
     },

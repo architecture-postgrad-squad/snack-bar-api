@@ -1,12 +1,7 @@
-import { BadRequestException } from "@/core/exceptions/custom-exceptions/bad-request.exception";
-import { NotFoundException } from "@/core/exceptions/custom-exceptions/not-found.exception";
-import {
-    ExceptionFilter,
-    Catch,
-    ArgumentsHost,
-    HttpStatus,
-  } from '@nestjs/common';
-  import { Request, Response } from 'express';
+import { BadRequestException } from '@/core/exceptions/custom-exceptions/bad-request.exception';
+import { NotFoundException } from '@/core/exceptions/custom-exceptions/not-found.exception';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from '@nestjs/common';
+import { Request, Response } from 'express';
 
 @Catch(Error)
 export class HttpExceptionFilter implements ExceptionFilter {

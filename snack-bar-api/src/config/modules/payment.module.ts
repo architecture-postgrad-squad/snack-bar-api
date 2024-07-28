@@ -1,12 +1,14 @@
+import { Module } from '@nestjs/common';
+
 import { PrismaService } from '@/config/prisma.config';
-import { OrderWriterServicePort } from '@/core/interactor/port/order/order-writer-service.port';
-import { PaymentReaderServicePort } from '@/core/interactor/port/payment/payment-reader-service.port';
-import { PaymentWriterServicePort } from '@/core/interactor/port/payment/payment-writer-service.port';
+import { UpdateOrderUseCasesPort } from '@/core/interactor/port/order/update-order-use-cases.port';
+import { CreatePaymentUseCasesPort } from '@/core/interactor/port/payment/create-payment-use-cases.port';
+import { FindPaymentByIdUseCasesPort } from '@/core/interactor/port/payment/find-payment-by-id-use-cases.port';
 import { UpdatePaymentServicePort } from '@/core/interactor/port/payment/update-payment-service.port';
-import { OrderWriterService } from '@/core/interactor/services/order/order-writer.service';
-import { PaymentReaderService } from '@/core/interactor/services/payment/payment-reader.service';
-import { PaymentWriterService } from '@/core/interactor/services/payment/payment-writer.service';
-import { UpdatePaymentUseCaseService } from '@/core/interactor/services/payment/update-usecase.service';
+import { UpdateOrderUseCases } from '@/core/interactor/usecases/order/update-order.use-cases';
+import { CreatePaymentUseCases } from '@/core/interactor/usecases/payment/create-payment.use-cases';
+import { FindPaymentByIdUseCases } from '@/core/interactor/usecases/payment/find-payment-by-id.use-cases';
+import { UpdatePaymentUseCaseService } from '@/core/interactor/usecases/payment/update.usecase';
 import { IOrderRepository } from '@/core/repository/order/order.respository';
 import { IPaymentRepository } from '@/core/repository/payment/payment.repository';
 import { OrderPostgresAdapter } from '@/datasource/database/adapter/order/order-postgres.adapter';
@@ -14,7 +16,6 @@ import { PaymentPostgresAdapter } from '@/datasource/database/adapter/payment/pa
 import { MercadoPagoAdapter } from '@/datasource/mercado-pago/adapter/mercado-pago-adapter.service';
 import { MercadoPagoServicePort } from '@/datasource/mercado-pago/port/mercado-pago-service.port';
 import { PaymentController } from '@/transport/controller/payment.controller';
-import { Module } from '@nestjs/common';
 
 @Module({
   imports: [],
@@ -22,15 +23,16 @@ import { Module } from '@nestjs/common';
   providers: [
     PrismaService,
     {
-      provide: PaymentWriterServicePort,
+      provide: CreatePaymentUseCasesPort,
       useFactory: (
         paymentRepository: IPaymentRepository,
-        orderWriterService: OrderWriterServicePort,
+        updateOrderUseCases: UpdateOrderUseCasesPort,
       ) => {
-        return new PaymentWriterService(paymentRepository, orderWriterService);
+        return new CreatePaymentUseCases(paymentRepository, updateOrderUseCases);
       },
-      inject: [IPaymentRepository, OrderWriterServicePort],
+      inject: [IPaymentRepository, UpdateOrderUseCasesPort],
     },
+
     {
       provide: MercadoPagoServicePort,
       useClass: MercadoPagoAdapter,
@@ -46,20 +48,21 @@ import { Module } from '@nestjs/common';
       inject: [IPaymentRepository, MercadoPagoServicePort],
     },
     {
-      provide: PaymentReaderServicePort,
+      provide: FindPaymentByIdUseCasesPort,
       useFactory: (paymentRepository: IPaymentRepository) => {
-        return new PaymentReaderService(paymentRepository);
+        return new FindPaymentByIdUseCases(paymentRepository);
       },
-      inject: [IPaymentRepository, OrderWriterServicePort],
+      inject: [IPaymentRepository],
     },
+
     {
       provide: IPaymentRepository,
       useClass: PaymentPostgresAdapter,
     },
     {
-      provide: OrderWriterServicePort,
+      provide: UpdateOrderUseCasesPort,
       useFactory: (orderRepository: IOrderRepository) => {
-        return new OrderWriterService(orderRepository);
+        return new UpdateOrderUseCases(orderRepository);
       },
       inject: [IOrderRepository],
     },

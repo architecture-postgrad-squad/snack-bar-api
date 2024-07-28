@@ -55,7 +55,7 @@ export class ProductDto {
     category: CategoryEnum,
     price: number,
     description?: string,
-    images?: JsonValue
+    images?: JsonValue,
   ) {
     this.id = id;
     this.name = name;
@@ -73,6 +73,6 @@ export const toDTO = (product: Product): ProductDto => {
     product.category,
     product.price,
     product.description,
-    product.images
-  )
-}
+    product.images,
+  );
+};

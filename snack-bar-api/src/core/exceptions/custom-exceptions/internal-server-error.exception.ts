@@ -1,7 +1,8 @@
-
 export class InternalServerErrorException extends Error {
-
-  constructor(message?: {description: string}, private statusCode = 500) {
+  constructor(
+    message?: { description: string },
+    private statusCode = 500,
+  ) {
     super(message.description);
     this.statusCode = statusCode;
     this.name = 'InternalServerErrorException';
@@ -15,5 +16,3 @@ export class InternalServerErrorException extends Error {
     return this.statusCode;
   }
 }
-
-

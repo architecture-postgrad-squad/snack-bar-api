@@ -4,8 +4,8 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Payment } from '@/core/domain/payment/payment.entity';
 import { InternalServerErrorException } from '@/core/exceptions/custom-exceptions/internal-server-error.exception';
 import { NotFoundException } from '@/core/exceptions/custom-exceptions/not-found.exception';
-import { PaymentReaderServicePort } from '@/core/interactor/port/payment/payment-reader-service.port';
-import { PaymentWriterServicePort } from '@/core/interactor/port/payment/payment-writer-service.port';
+import { CreatePaymentUseCasesPort } from '@/core/interactor/port/payment/create-payment-use-cases.port';
+import { FindPaymentByIdUseCasesPort } from '@/core/interactor/port/payment/find-payment-by-id-use-cases.port';
 import { UpdatePaymentServicePort } from '@/core/interactor/port/payment/update-payment-service.port';
 import { API_RESPONSE } from '@/transport/constant/api-response.constant';
 import { PAYMENT } from '@/transport/constant/payment.constant';
@@ -24,9 +24,9 @@ const { CREATED_DESC, OK_DESC, INTERNAL_SERVER_EXCEPTION_DESC, NOT_FOUND_DESC } 
 @ApiTags('payments')
 export class PaymentController {
   constructor(
-    private readonly paymentWriterService: PaymentWriterServicePort,
-    private readonly paymentReaderService: PaymentReaderServicePort,
     private readonly updatePaymentUseCaseService: UpdatePaymentServicePort,
+    private readonly createPaymentUseCases: CreatePaymentUseCasesPort,
+    private readonly findPaymentByIdUseCases: FindPaymentByIdUseCasesPort,
   ) {}
 
   @Post()
@@ -42,7 +42,7 @@ export class PaymentController {
     type: () => InternalServerErrorException,
   })
   async create(@Body() createPaymentDto: CreatePaymentDto) {
-    const payment = await this.paymentWriterService.create(
+    const payment = await this.createPaymentUseCases.execute(
       toDomain(createPaymentDto),
       createPaymentDto.orderId,
     );
@@ -68,7 +68,7 @@ export class PaymentController {
     type: () => InternalServerErrorException,
   })
   async getStatusById(@Param('id') id: string): Promise<any> {
-    return toDTO(await this.paymentReaderService.findById(id));
+    return toDTO(await this.findPaymentByIdUseCases.execute(id));
   }
 
   @Patch(':id')

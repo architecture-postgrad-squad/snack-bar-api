@@ -34,9 +34,5 @@ export class CreatePaymentDto {
 }
 
 export const toDomain = (dto: CreatePaymentDto): Payment => {
-  return new Payment(
-    null,
-    dto.value,
-    dto.method,
-  );
+  return new Payment(null, dto.value, dto.method);
 };

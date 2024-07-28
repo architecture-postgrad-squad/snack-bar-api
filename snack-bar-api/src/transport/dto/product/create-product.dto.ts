@@ -61,6 +61,6 @@ export const toDomain = (dto: CreateProductRequestDto): Product => {
     dto.category as CategoryEnum,
     dto.price,
     dto.description,
-    dto.images
-  )
-}
+    dto.images,
+  );
+};

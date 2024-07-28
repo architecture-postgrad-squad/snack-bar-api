@@ -1,5 +1,5 @@
 import { Payment } from '@/core/domain/payment/payment.entity';
-import { UpdatePaymentUseCaseService } from '@/core/interactor/services/payment/update-usecase.service';
+import { UpdatePaymentUseCaseService } from '@/core/interactor/usecases/payment/update.usecase';
 import { IPaymentRepository } from '@/core/repository/payment/payment.repository';
 import { MercadoPagoServicePort } from '@/datasource/mercado-pago/port/mercado-pago-service.port';
 
