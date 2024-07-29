@@ -23,4 +23,15 @@ export class PaymentPostgresAdapter implements IPaymentRepository {
       },
     });
   }
+
+  async updateById(id: string, payment: Payment): Promise<Payment> {
+    return await this.prisma.payment.update({
+      where: {
+        id,
+      },
+      data: {
+        ...payment,
+      },
+    });
+  }
 }

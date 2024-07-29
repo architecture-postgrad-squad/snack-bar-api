@@ -10,7 +10,7 @@ import { FindAllOrdersUseCases } from '@/core/interactor/usecases/order/find-all
 import { FindOrderByIdUseCases } from '@/core/interactor/usecases/order/find-order-by-id.use-cases';
 import { UpdateOrderUseCases } from '@/core/interactor/usecases/order/update-order.use-cases';
 import { IOrderRepository } from '@/core/repository/order/order.respository';
-import { OrderPostgresAdapter } from '@/datasource/adapter/order/order-postgres.adapter';
+import { OrderPostgresAdapter } from '@/datasource/database/adapter/order/order-postgres.adapter';
 import { OrderController } from '@/transport/controller/order.controller';
 
 @Module({

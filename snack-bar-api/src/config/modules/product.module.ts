@@ -10,7 +10,7 @@ import { FindAllProductsUseCases } from '@/core/interactor/usecases/product/find
 import { FindProductByIdUseCases } from '@/core/interactor/usecases/product/find-product-by-id.use-cases';
 import { FindProductsByCategoryUseCases } from '@/core/interactor/usecases/product/find-products-by-category.use-cases';
 import { IProductRepository } from '@/core/repository/product/product.repository';
-import { ProductPostgresAdapter } from '@/datasource/adapter/product/product-postgres.adapter';
+import { ProductPostgresAdapter } from '@/datasource/database/adapter/product/product-postgres.adapter';
 import { ProductController } from '@/transport/controller/product.controller';
 
 @Module({

@@ -7,6 +7,7 @@ describe('FindPaymentByIdUseCases', () => {
   const paymentRepository: IPaymentRepository = {
     create: jest.fn(),
     findById: jest.fn(),
+    updateById: jest.fn(),
   };
   const useCase: FindPaymentByIdUseCasesPort = new FindPaymentByIdUseCases(
     paymentRepository,

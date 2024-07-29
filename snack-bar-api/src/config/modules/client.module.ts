@@ -12,7 +12,7 @@ import { FindClientByCpfUseCases } from '@/core/interactor/usecases/client/find-
 import { FindClientByIdUseCases } from '@/core/interactor/usecases/client/find-client-by-id.use-cases';
 import { UpdateClientUseCases } from '@/core/interactor/usecases/client/update-client.use-cases';
 import { IClientRepository } from '@/core/repository/client/client.repository';
-import { ClientPostgresAdapter } from '@/datasource/adapter/client/client-postgres.adapter';
+import { ClientPostgresAdapter } from '@/datasource/database/adapter/client/client-postgres.adapter';
 import { ClientController } from '@/transport/controller/client.controller';
 
 @Module({

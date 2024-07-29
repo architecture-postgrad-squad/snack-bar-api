@@ -17,6 +17,7 @@ describe('CreatePaymentUseCases', () => {
         Promise.resolve({ ...payment, id: 'some-id', createdAt: new Date() }),
       ),
       findById: jest.fn(),
+      updateById: jest.fn(),
     };
 
     updateOrderUseCases = {
