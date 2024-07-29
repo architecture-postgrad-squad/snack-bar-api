@@ -1,10 +1,10 @@
 import { Payment } from '@/core/domain/payment/payment.entity';
-import { UpdatePaymentUseCaseService } from '@/core/interactor/usecases/payment/update.usecase';
+import { UpdatePaymentUseCase } from '@/core/interactor/usecases/payment/update-payment.use-cases';
 import { IPaymentRepository } from '@/core/repository/payment/payment.repository';
 import { MercadoPagoServicePort } from '@/datasource/mercado-pago/port/mercado-pago-service.port';
 
-describe('UpdatePaymentUseCaseService', () => {
-  let service: UpdatePaymentUseCaseService;
+describe('UpdatePaymentUseCase', () => {
+  let service: UpdatePaymentUseCase;
   let paymentRepository: IPaymentRepository;
   let mercadoPagoAdapterService: MercadoPagoServicePort;
 
@@ -19,7 +19,7 @@ describe('UpdatePaymentUseCaseService', () => {
       getPaymentById: jest.fn(),
     };
 
-    service = new UpdatePaymentUseCaseService(
+    service = new UpdatePaymentUseCase(
       paymentRepository,
       mercadoPagoAdapterService,
     );

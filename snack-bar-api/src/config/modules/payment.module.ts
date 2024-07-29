@@ -8,7 +8,7 @@ import { UpdatePaymentServicePort } from '@/core/interactor/port/payment/update-
 import { UpdateOrderUseCases } from '@/core/interactor/usecases/order/update-order.use-cases';
 import { CreatePaymentUseCases } from '@/core/interactor/usecases/payment/create-payment.use-cases';
 import { FindPaymentByIdUseCases } from '@/core/interactor/usecases/payment/find-payment-by-id.use-cases';
-import { UpdatePaymentUseCaseService } from '@/core/interactor/usecases/payment/update.usecase';
+import { UpdatePaymentUseCase } from '@/core/interactor/usecases/payment/update-payment.use-cases';
 import { IOrderRepository } from '@/core/repository/order/order.respository';
 import { IPaymentRepository } from '@/core/repository/payment/payment.repository';
 import { OrderPostgresAdapter } from '@/datasource/database/adapter/order/order-postgres.adapter';
@@ -43,7 +43,7 @@ import { PaymentController } from '@/transport/controller/payment.controller';
         paymentRepository: IPaymentRepository,
         mercadoPagoAdapter: MercadoPagoServicePort,
       ) => {
-        return new UpdatePaymentUseCaseService(paymentRepository, mercadoPagoAdapter);
+        return new UpdatePaymentUseCase(paymentRepository, mercadoPagoAdapter);
       },
       inject: [IPaymentRepository, MercadoPagoServicePort],
     },

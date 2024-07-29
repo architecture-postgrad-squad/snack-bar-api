@@ -5,7 +5,7 @@ import { IPaymentRepository } from '@/core/repository/payment/payment.repository
 import { MercadoPagoServicePort } from '@/datasource/mercado-pago/port/mercado-pago-service.port';
 import { UpdatePaymentResponseDto } from '@/transport/dto/payment/response/update-success-response.dto';
 
-export class UpdatePaymentUseCaseService implements UpdatePaymentServicePort {
+export class UpdatePaymentUseCase implements UpdatePaymentServicePort {
   constructor(
     private readonly paymentRepository: IPaymentRepository,
     private readonly mercadoPagoAdapterService: MercadoPagoServicePort,
