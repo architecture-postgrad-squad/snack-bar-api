@@ -1,4 +1,4 @@
-# Pós Tech - Tech challenge 1
+# Pós Tech - Tech challenge 
 
 ### Alunos
 
@@ -9,16 +9,21 @@
 
 ### O que é o projeto?
 
-Solução do tech challenge 1 da pós tech de Software Architecture, nossa solução foi desenvolvida em Typescript utilizando o framework Nestjs.
+Solução do tech challenge da pós tech de Software Architecture, nossa solução foi desenvolvida em Typescript utilizando o framework Nestjs.
 
 ### Documentação do sistema
 
-Event Storming no Miro: https://miro.com/app/board/uXjVKUrPAdA=/?share_link_id=25578601860
+[Miro]( https://miro.com/app/board/uXjVKUrPAdA=/?share_link_id=25578601860) contém:
+- Event storming
+- MER
+- Desenho da arquitetura
+
 
 ### Como iniciar localmente
 
 ```bash
-$ cd ${PROJECT_DIRECTORY}
+$ git submodule update --init
+$ cd snack-bar-api
 $ docker-compose --env-file ./env/local.env up
 ```
 
@@ -28,5 +33,6 @@ Para acessar o swagger: http://localhost:3000/api
 
 ```bash
 # unit tests
+$ cd snack-bar-api
 $ npm run test
 ```
