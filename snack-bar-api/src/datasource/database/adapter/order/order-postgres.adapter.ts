@@ -48,6 +48,15 @@ export class OrderPostgresAdapter implements IOrderRepository {
     return orders as Order;
   }
 
+  async findOrderByPayment(id: string): Promise<Order> {
+    const order = await this.prisma.order.findUnique({
+      where: {
+        paymentId: id,
+      },
+    });
+    return order as Order;
+  }
+
   async findOrderProductById(id: string): Promise<OrderProduct> {
     const orders = await this.prisma.order
       .findUnique({
@@ -102,6 +111,6 @@ export class OrderPostgresAdapter implements IOrderRepository {
           return { ...order, products: order.products.map((product) => product.product) };
         });
       });
-    return orders as unknown as OrderProduct[];
+    return orders as OrderProduct[];
   }
 }

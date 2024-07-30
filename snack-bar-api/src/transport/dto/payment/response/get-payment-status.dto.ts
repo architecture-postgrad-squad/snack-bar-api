@@ -12,11 +12,11 @@ export class GetPaymentStatusResponseDto {
   })
   status: string;
 
-  constructor(id?: string) {
-    this.status = id ? 'APROVADO' : null;
+  constructor(status: string) {
+    this.status = status;
   }
 }
 
 export const toDTO = (payment: Payment): GetPaymentStatusResponseDto => {
-  return new GetPaymentStatusResponseDto(payment.id);
+  return new GetPaymentStatusResponseDto(payment.status);
 };

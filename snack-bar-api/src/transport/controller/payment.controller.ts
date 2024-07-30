@@ -4,7 +4,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Payment } from '@/core/domain/payment/payment.entity';
 import { InternalServerErrorException } from '@/core/exceptions/custom-exceptions/internal-server-error.exception';
 import { NotFoundException } from '@/core/exceptions/custom-exceptions/not-found.exception';
-import { CreatePaymentUseCasesPort } from '@/core/interactor/port/payment/create-payment-use-cases.port';
+import { CreatePixPaymentUseCasesPort } from '@/core/interactor/port/payment/create-payment-use-cases.port';
 import { FindPaymentByIdUseCasesPort } from '@/core/interactor/port/payment/find-payment-by-id-use-cases.port';
 import { UpdatePaymentServicePort } from '@/core/interactor/port/payment/update-payment-service.port';
 import { API_RESPONSE } from '@/transport/constant/api-response.constant';
@@ -25,7 +25,7 @@ const { CREATED_DESC, OK_DESC, INTERNAL_SERVER_EXCEPTION_DESC, NOT_FOUND_DESC } 
 export class PaymentController {
   constructor(
     private readonly updatePaymentUseCaseService: UpdatePaymentServicePort,
-    private readonly createPaymentUseCases: CreatePaymentUseCasesPort,
+    private readonly createPaymentUseCases: CreatePixPaymentUseCasesPort,
     private readonly findPaymentByIdUseCases: FindPaymentByIdUseCasesPort,
   ) {}
 
@@ -44,10 +44,11 @@ export class PaymentController {
   async create(@Body() createPaymentDto: CreatePaymentDto) {
     const payment = await this.createPaymentUseCases.execute(
       toDomain(createPaymentDto),
+      createPaymentDto.client,
       createPaymentDto.orderId,
     );
 
-    return { id: payment.id };
+    return payment;
   }
 
   @Get(':id')

@@ -5,6 +5,7 @@ export abstract class IOrderRepository {
   abstract create(order: Order, productsIds: string[]): Promise<Order>;
   abstract update(order: Order): Promise<Order>;
   abstract findOrderById(id: string): Promise<Order>;
+  abstract findOrderByPayment(id: string): Promise<Order>;
 
   abstract findOrderProductById(id: string): Promise<OrderProduct>;
   abstract findAllOrderProduct(): Promise<OrderProduct[]>;

@@ -1,4 +1,5 @@
 import { StatusEnum } from '@/core/domain/order/status.entity';
+import { StatusEnum as PaymentStatusEnum } from '@/core/domain/payment/status.entity';
 import { CategoryEnum } from '@/core/enum/product/category.enum';
 import { FindAllOrdersUseCases } from '@/core/interactor/usecases/order/find-all-orders.use-cases';
 import { IOrderRepository } from '@/core/repository/order/order.respository';
@@ -32,6 +33,8 @@ describe('FindAllOrdersUseCases', () => {
       id: '1',
       value: 100,
       method: 'credit_card',
+      externalId: '123',
+      status: PaymentStatusEnum.APPROVED,
       createdAt: new Date(),
     },
   };
@@ -59,8 +62,10 @@ describe('FindAllOrdersUseCases', () => {
     },
     payment: {
       id: '2',
-      value: 50,
+      value: 100,
       method: 'credit_card',
+      externalId: '123',
+      status: PaymentStatusEnum.APPROVED,
       createdAt: new Date(),
     },
   };
@@ -88,8 +93,10 @@ describe('FindAllOrdersUseCases', () => {
     },
     payment: {
       id: '3',
-      value: 70,
+      value: 100,
       method: 'credit_card',
+      externalId: '123',
+      status: PaymentStatusEnum.APPROVED,
       createdAt: new Date(),
     },
   };
@@ -117,8 +124,10 @@ describe('FindAllOrdersUseCases', () => {
     },
     payment: {
       id: '4',
-      value: 80,
+      value: 100,
       method: 'credit_card',
+      externalId: '123',
+      status: PaymentStatusEnum.APPROVED,
       createdAt: new Date(),
     },
   };
@@ -129,6 +138,7 @@ describe('FindAllOrdersUseCases', () => {
       update: jest.fn(),
       findOrderById: jest.fn(),
       findOrderProductById: jest.fn(),
+      findOrderByPayment: jest.fn(),
       findAllOrderProduct: jest.fn(),
     };
 

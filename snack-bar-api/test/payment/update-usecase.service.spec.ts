@@ -1,4 +1,7 @@
 import { Payment } from '@/core/domain/payment/payment.entity';
+import { StatusEnum } from '@/core/domain/payment/status.entity';
+import { FindOrderByPaymentUseCasesPort } from '@/core/interactor/port/order/find-order-by-payment-use-cases.port';
+import { UpdateOrderUseCasesPort } from '@/core/interactor/port/order/update-order-use-cases.port';
 import { UpdatePaymentUseCase } from '@/core/interactor/usecases/payment/update-payment.use-cases';
 import { IPaymentRepository } from '@/core/repository/payment/payment.repository';
 import { MercadoPagoServicePort } from '@/datasource/mercado-pago/port/mercado-pago-service.port';
@@ -7,6 +10,8 @@ describe('UpdatePaymentUseCase', () => {
   let service: UpdatePaymentUseCase;
   let paymentRepository: IPaymentRepository;
   let mercadoPagoAdapterService: MercadoPagoServicePort;
+  let updateOrderUseCase: UpdateOrderUseCasesPort;
+  let findOrderByPaymentUseCases: FindOrderByPaymentUseCasesPort;
 
   beforeEach(async () => {
     paymentRepository = {
@@ -16,12 +21,23 @@ describe('UpdatePaymentUseCase', () => {
     };
 
     mercadoPagoAdapterService = {
+      createPayment: jest.fn(),
       getPaymentById: jest.fn(),
+    };
+
+    updateOrderUseCase = {
+      execute: jest.fn(),
+    };
+
+    findOrderByPaymentUseCases = {
+      execute: jest.fn(),
     };
 
     service = new UpdatePaymentUseCase(
       paymentRepository,
       mercadoPagoAdapterService,
+      findOrderByPaymentUseCases,
+      updateOrderUseCase,
     );
   });
 
@@ -30,6 +46,8 @@ describe('UpdatePaymentUseCase', () => {
       id: '122',
       value: 100,
       method: 'PIX',
+      externalId: '123',
+      status: StatusEnum.APPROVED,
       createdAt: new Date(),
     };
 
