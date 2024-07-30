@@ -13,6 +13,7 @@ describe('UpdateOrderUseCases', () => {
       update: jest.fn(),
       findOrderById: jest.fn(),
       findOrderProductById: jest.fn(),
+      findOrderByPayment: jest.fn(),
       findAllOrderProduct: jest.fn(),
     };
 

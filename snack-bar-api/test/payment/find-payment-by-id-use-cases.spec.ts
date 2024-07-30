@@ -1,3 +1,4 @@
+import { StatusEnum } from '@/core/domain/payment/status.entity';
 import { NotFoundException } from '@/core/exceptions/custom-exceptions/not-found.exception';
 import { FindPaymentByIdUseCasesPort } from '@/core/interactor/port/payment/find-payment-by-id-use-cases.port';
 import { FindPaymentByIdUseCases } from '@/core/interactor/usecases/payment/find-payment-by-id.use-cases';
@@ -17,6 +18,8 @@ describe('FindPaymentByIdUseCases', () => {
     id: '1',
     value: 100,
     method: 'Credit Card',
+    externalId: '123',
+    status: StatusEnum.APPROVED,
     createdAt: new Date(),
   };
 

@@ -1,4 +1,5 @@
 import { StatusEnum } from '@/core/domain/order/status.entity';
+import { StatusEnum as PaymentStatusEnum } from '@/core/domain/payment/status.entity';
 import { CategoryEnum } from '@/core/enum/product/category.enum';
 import { NotFoundException } from '@/core/exceptions/custom-exceptions/not-found.exception';
 import { FindOrderByIdUseCases } from '@/core/interactor/usecases/order/find-order-by-id.use-cases';
@@ -33,6 +34,8 @@ describe('FindOrderByIdUseCases', () => {
       id: '1',
       value: 100,
       method: 'credit_card',
+      externalId: '123',
+      status: PaymentStatusEnum.APPROVED,
       createdAt: new Date(),
     },
   };
@@ -43,6 +46,7 @@ describe('FindOrderByIdUseCases', () => {
       update: jest.fn(),
       findOrderById: jest.fn(),
       findOrderProductById: jest.fn(),
+      findOrderByPayment: jest.fn(),
       findAllOrderProduct: jest.fn(),
     };
 
