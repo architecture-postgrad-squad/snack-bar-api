@@ -1,4 +1,4 @@
-# Pós Tech - Tech challenge 
+# Pós Tech - Tech challenge 2
 
 ### Alunos
 
@@ -9,7 +9,7 @@
 
 ### O que é o projeto?
 
-Solução do tech challenge da pós tech de Software Architecture, nossa solução foi desenvolvida em Typescript utilizando o framework Nestjs.
+Solução do segundo tech challenge da pós tech de Software Architecture, nossa solução foi desenvolvida em Typescript utilizando o framework Nestjs.
 
 ### Documentação do sistema
 
@@ -18,21 +18,32 @@ Solução do tech challenge da pós tech de Software Architecture, nossa soluç�
 - MER
 - Desenho da arquitetura
 
+A arquitetura implementada para os requisitos técnicos solicitados no tech challenge 2 está descrito na imagem abaixo:
+
+![image](https://github.com/user-attachments/assets/4c28d533-ac45-46b5-99f9-fd481eda1f34)
+
+- Webhook: API que receberá notificações sobre status do pagamento do QR code referente a compra no backend;
+- Backend: API que gerencia os pedidos da lanchonete e faz interface com o banco de dados do serviço;
+- Db: Banco de dados do backend
+
+### Requisitos 
+Ter [kubernetes](https://kubernetes.io/releases/download/), [docker](https://docs.docker.com/get-docker/) e [git](https://git-scm.com/downloads) instalado.
 
 ### Como iniciar localmente
+Para essa etapa do tech challenge, subimos nossa aplicação utilizando kubernetes. Foi criado um cluster com um namespace (snack-bar) e pods para cada serviço especificado no desenho de arquitetura.
 
 ```bash
-$ git submodule update --init
-$ cd snack-bar-api
-$ docker-compose --env-file ./env/local.env up
+$ git submodule update --init --recursive
+$ cd k8s
+$ kubectl apply -f .
 ```
 
-Para acessar o swagger: http://localhost:3000/api
+Para validar o funcionamento da API, utilize a collection do postman: [TODO: Adicionar link]
 
 ## Como rodar os testes localmente
 
 ```bash
-# unit tests
 $ cd snack-bar-api
+$ npm i
 $ npm run test
 ```
