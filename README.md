@@ -38,7 +38,7 @@ $ cd k8s
 $ kubectl apply -f .
 ```
 
-Para validar o funcionamento da API, utilize a collection do postman: [TODO: Adicionar link]
+Para validar o funcionamento da API, utilize a collection do [postman](https://drive.google.com/file/d/1QbAelxs9t26lzl5J3oAwloiguJduVlrh/view?usp=sharing)
 
 ## Como rodar os testes localmente
 
