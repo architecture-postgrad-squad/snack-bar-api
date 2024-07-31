@@ -1,3 +1,4 @@
 [submodule "payment-webhook"]
 	path = payment-webhook
 	url = https://github.com/fmo00/payment-webhook.git
+	branch = main
