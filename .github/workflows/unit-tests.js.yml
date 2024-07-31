@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./snack-bar-api
 
     strategy:
       matrix:
@@ -16,15 +18,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: snack-bar-api/package-lock.json
 
       - name: Install dependencies
         run: npm install
-
+        working-directory: ${{env.working-directory}}
+        
       - name: Run unit tests
         run: npm run test
+        working-directory: ${{env.working-directory}}
