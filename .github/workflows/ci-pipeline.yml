@@ -1,0 +1,139 @@
+name: CI Pipeline for API and Payment-Webhook
+
+on:
+  pull_request:
+    branches: ['main', 'development']
+  push:
+    branches:
+      - main
+
+jobs:
+  unit_tests:
+    name: Run Unit Tests for API
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./snack-bar-api
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: snack-bar-api/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ${{ env.working-directory }}
+
+      - name: Run unit tests
+        run: npm run test
+        working-directory: ${{ env.working-directory }}
+
+  build_images:
+    name: Build Docker Images for API + Payment-Webhook
+    runs-on: ubuntu-latest
+    needs: unit_tests
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker Image for API
+        run: |
+          docker build -t deborasilveira/snack-bar-api:latest ./snack-bar-api
+
+      - name: Detect changes in Payment Webhook
+        id: check_webhook_changes
+        run: |
+          if git diff --name-only HEAD^ HEAD | grep "payment-webhook"; then
+            echo "::set-output name=webhook_changed::true"
+          else
+            echo "::set-output name=webhook_changed::false"
+          fi
+
+      - name: Build Docker Image for Payment Webhook
+        if: steps.check_webhook_changes.outputs.webhook_changed == 'true'
+        run: |
+          docker build -t deborasilveira/payment-webhook-api:latest ./payment-webhook
+
+  push_images:
+    name: Push Docker Images for API + Payment-Webhook
+    runs-on: ubuntu-latest
+    needs: build_images
+    if: github.event_name == 'push'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Docker Image for API
+        run: |
+          docker push deborasilveira/snack-bar-api:latest
+
+      - name: Push Docker Image for Payment Webhook
+        if: steps.check_webhook_changes.outputs.webhook_changed == 'true'
+        run: |
+          docker push deborasilveira/payment-webhook-api:latest
+
+  deploy_to_k8s:
+    name: Deploy to Kubernetes
+    runs-on: ubuntu-latest
+    needs: push_images
+    if: github.event_name == 'push'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'
+
+      - name: Set up EKS kubeconfig
+        run: |
+          aws eks update-kubeconfig --name snack-bar-cluster --region ${{ secrets.AWS_REGION }}
+
+      - name: Update Kubernetes Deployment for API
+        run: |
+          kubectl set image deployment/snack-bar-api snack-bar-api=deborasilveira/snack-bar-api:latest -n snack-bar
+          kubectl rollout status deployment/snack-bar-api -n snack-bar
+
+      - name: Update Kubernetes Deployment for Payment Webhook
+        if: steps.check_webhook_changes.outputs.webhook_changed == 'true'
+        run: |
+          kubectl set image deployment/payment-webhook-api payment-webhook-api=deborasilveira/payment-webhook-api:latest -n snack-bar
+          kubectl rollout status deployment/payment-webhook-api -n snack-bar
