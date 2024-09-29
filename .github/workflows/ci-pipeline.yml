@@ -55,7 +55,7 @@ jobs:
 
       - name: Build Docker Image for API
         run: |
-          docker build -t deborasilveira/snack-bar-api:latest ./snack-bar-api
+          docker build -t snackbarapi/snack-bar-api:latest ./snack-bar-api
 
       - name: Detect changes in Payment Webhook
         id: check_webhook_changes
@@ -69,7 +69,7 @@ jobs:
       - name: Build Docker Image for Payment Webhook
         if: steps.check_webhook_changes.outputs.webhook_changed == 'true'
         run: |
-          docker build -t deborasilveira/payment-webhook-api:latest ./payment-webhook
+          docker build -t snackbarapi/payment-webhook-api:latest ./payment-webhook
 
   push_images:
     name: Push Docker Images for API + Payment-Webhook
@@ -91,12 +91,12 @@ jobs:
 
       - name: Push Docker Image for API
         run: |
-          docker push deborasilveira/snack-bar-api:latest
+          docker push snackbarapi/snack-bar-api:latest
 
       - name: Push Docker Image for Payment Webhook
         if: steps.check_webhook_changes.outputs.webhook_changed == 'true'
         run: |
-          docker push deborasilveira/payment-webhook-api:latest
+          docker push snackbarapi/payment-webhook-api:latest
 
   deploy_to_k8s:
     name: Deploy to Kubernetes
@@ -129,11 +129,11 @@ jobs:
 
       - name: Update Kubernetes Deployment for API
         run: |
-          kubectl set image deployment/snack-bar-api snack-bar-api=deborasilveira/snack-bar-api:latest -n snack-bar
+          kubectl set image deployment/snack-bar-api snack-bar-api=snackbarapi/snack-bar-api:latest -n snack-bar
           kubectl rollout status deployment/snack-bar-api -n snack-bar
 
       - name: Update Kubernetes Deployment for Payment Webhook
         if: steps.check_webhook_changes.outputs.webhook_changed == 'true'
         run: |
-          kubectl set image deployment/payment-webhook-api payment-webhook-api=deborasilveira/payment-webhook-api:latest -n snack-bar
+          kubectl set image deployment/payment-webhook-api payment-webhook-api=snackbarapi/payment-webhook-api:latest -n snack-bar
           kubectl rollout status deployment/payment-webhook-api -n snack-bar
