@@ -2,3 +2,15 @@
 	path = payment-webhook
 	url = https://github.com/fmo00/payment-webhook.git
 	branch = main
+
+[submodule "snack-bar-api-infra-k8s"]
+	path = snack-bar-api-infra-k8s
+	url = https://github.com/architecture-postgrad-squad/snack-bar-api-infra-k8s.git
+
+[submodule "snack-bar-api-infra-db"]
+	path = snack-bar-api-infra-db
+	url = https://github.com/architecture-postgrad-squad/snack-bar-api-infra-db.git
+	
+[submodule "snack-bar-api-lambda"]
+	path = snack-bar-api-lambda
+	url = https://github.com/architecture-postgrad-squad/snack-bar-api-lambda.git
