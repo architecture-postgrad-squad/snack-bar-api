@@ -6,11 +6,19 @@
 [submodule "snack-bar-api-infra-k8s"]
 	path = snack-bar-api-infra-k8s
 	url = https://github.com/architecture-postgrad-squad/snack-bar-api-infra-k8s.git
+	branch = development
 
 [submodule "snack-bar-api-infra-db"]
 	path = snack-bar-api-infra-db
 	url = https://github.com/architecture-postgrad-squad/snack-bar-api-infra-db.git
+	branch = development
 	
 [submodule "snack-bar-api-lambda"]
 	path = snack-bar-api-lambda
 	url = https://github.com/architecture-postgrad-squad/snack-bar-api-lambda.git
+	branch = development
+
+[submodule "snack-bar-backend"]
+	path = snack-bar-backend
+	url = https://github.com/architecture-postgrad-squad/snack-bar-backend
+	branch = repository_for_backend
