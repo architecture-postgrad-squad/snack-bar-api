@@ -33,11 +33,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ${{ env.working-directory }}
+        working-directory: ./snack-bar-backend/api/
 
       - name: Run unit tests
         run: npm run test
-        working-directory: ${{ env.working-directory }}
+        working-directory: ./snack-bar-backend/api/
 
   build_and_push_images:
     name: Build and Push Docker Images for API + Payment-Webhook
