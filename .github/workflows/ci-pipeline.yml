@@ -12,7 +12,7 @@ jobs:
     name: Run Unit Tests for API
     runs-on: ubuntu-latest
     env:
-      working-directory: ./snack-bar-api
+      working-directory: ./snack-bar-api/snack-bar-backend
 
     strategy:
       matrix:
