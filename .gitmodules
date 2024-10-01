@@ -20,5 +20,5 @@
 
 [submodule "snack-bar-backend"]
 	path = snack-bar-backend
-	url = https://github.com/architecture-postgrad-squad/snack-bar-backend
+	url = https://github.com/architecture-postgrad-squad/snack-bar-backend.git
 	branch = repository_for_backend
