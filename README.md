@@ -37,7 +37,7 @@ O processo de autenticação é feito com os serviços cognito e Lambda function
 
 A lambda function por sua vez deve solicitar do Cognito um access token criado para os campos de login enviados, no nosso caso será apenas o cpf. O Access token dispõe de um contexto, o qual limita acesso às APIs dispostas na infraestrutura.
 
-⚠️ TODO: @eduardo descrever melhorias do banco de dados
+Da forma como implementamos o banco de dados inicialmente, não foi necessário realizar nenhuma mudança em seu esquema pois ele já está performático e otimizado, isso foi feito através da normalização do banco e estruturação das suas tabelas. A única implementação feita em cima disso, foi a conexão com a RDS e sua configuração através da infraestrutura do kubernetes.
 
 
 ### Requisitos 
@@ -45,7 +45,8 @@ A lambda function por sua vez deve solicitar do Cognito um access token criado p
 - [Kubernetes](https://kubernetes.io/releases/download/);
 - [Docker](https://docs.docker.com/get-docker/);
 - [Git](https://git-scm.com/downloads);
-- [AWS CLI](https://aws.amazon.com/cli/).
+- [AWS CLI](https://aws.amazon.com/cli/);
+- [Terraform](https://developer.hashicorp.com/terraform/install).
 
 ### Como iniciar localmente
 
